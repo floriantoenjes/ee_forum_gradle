@@ -1,0 +1,19 @@
+<ui:composition template="template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <div class="wrapper">
+            <h2><h:outputLabel value="#{threadController.thread.name}"/></h2>
+            <h:messages/>
+        </div>
+        <h:form styleClass="center-form">
+            <h:panelGrid columns="2">
+                <h:outputLabel for="name" value="Title:"/>
+                <h:inputText id="name" value="#{threadController.thread.name}"/>
+                <h:commandButton action="#{threadController.editThread}" value="Edit thread"/>
+                <h:commandButton action="#{threadController.deleteThread}" value="Delete thread"/>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

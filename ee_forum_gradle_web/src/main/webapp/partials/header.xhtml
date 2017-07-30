@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h1 id="title">Forum</h1>
+    <ul class="navbar">
+        <li><h:link value="Home" outcome="pretty:home"/></li>
+        <ui:fragment rendered="#{signInController.user == null}">
+            <li><h:link value="Sign in" outcome="signin.xhtml"/></li>
+        </ui:fragment>
+        <ui:fragment rendered="#{signInController.user == null}">
+            <li><h:link value="Register" outcome="register.xhtml"/></li>
+        </ui:fragment>
+        <li>
+            <h:form rendered="#{signInController.user != null}">
+                <h:commandLink value="Sign out" action="#{signInController.logout}"/>
+            </h:form>
+        </li>
+        <ui:fragment rendered="#{signInController.user != null}">
+            <li><h:link value="Control Center" outcome="/control-center.xhtml"/></li>
+        </ui:fragment>
+        <li><h:link value="Search" outcome="/search.xhtml"/></li>
+
+    </ul>
+</f:view>
+</html>

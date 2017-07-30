@@ -1,0 +1,4 @@
+rootProject.name = 'ee_forum_gradle'
+
+includeFlat 'ee_forum_gradle_ejb'
+includeFlat 'ee_forum_gradle_web'

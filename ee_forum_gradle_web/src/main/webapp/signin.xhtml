@@ -1,0 +1,21 @@
+<ui:composition template="template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <h:form styleClass="sign-in" id="signinForm">
+            <h:panelGrid styleClass="table" columns="2">
+                <f:facet name="header">
+                    <h:outputText value="Sign In"/>
+                </f:facet>
+                <h:outputLabel for="username" value="Username:"/>
+                <h:inputText id="username" value="#{signInController.username}"/>
+                <h:outputLabel for="password" value="Password:"/>
+                <h:inputSecret id="password" value="#{signInController.password}"/>
+                <h:column/>
+                <h:message for="signinForm"/>
+                <h:commandButton action="#{signInController.signin}" value="Signin"/>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

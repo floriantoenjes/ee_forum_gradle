@@ -1,0 +1,21 @@
+<ui:composition template="template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <div class="wrapper">
+            <h2><h:outputLabel value="#{threadController.board.name}"/></h2>
+            <h:messages/>
+        </div>
+        <h:form styleClass="center-form">
+            <h:panelGrid columns="2">
+                <h:outputLabel for="name" value="Title:"/>
+                <h:inputText id="name" value="#{threadController.thread.name}"/>
+                <h:outputLabel for="firstPost" value="First post:"/>
+                <h:inputTextarea id="firstPost" value="#{threadController.post.text}" cols="80" rows="20"/>
+                <h:commandButton action="#{threadController.createThread(signInController.user)}"
+                                 value="Create Thread"/>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,68 @@
+body {
+    font-family: sans-serif;
+}
+
+#title {
+    text-align: center;
+}
+
+#subtitle {
+    text-align: center;
+}
+
+.navbar {
+    width: 50%;
+    margin: 0 auto;
+    padding: 0.5em;
+    text-align: center;
+}
+
+.navbar li {
+    display: inline-block;
+}
+
+.table {
+    margin: 1em auto 1em;
+    border: 1px solid black;
+}
+
+.table-header {
+    padding: 0.5em;
+}
+
+.table-even-row {
+    background-color: #E5E5E5;
+}
+
+.table-odd-row {
+}
+
+.table td {
+    padding: 0.5em;
+}
+
+.wrapper {
+    text-align: center;
+}
+
+.thread-wrapper {
+    width: 75%;
+    margin: 0 auto;
+}
+
+.post-table {
+    width: 75%;
+}
+
+.center-form {
+    width: 15%;
+    margin: 0 auto;
+}
+
+.avatar-column {
+    width: 100px;
+}
+
+.post-column {
+    width: 80%;
+}

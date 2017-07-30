@@ -1,0 +1,67 @@
+<ui:composition template="template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:pretty="http://ocpsoft.com/prettyfaces">
+    <ui:define name="content">
+
+        <div class="thread-wrapper">
+            <pretty:link mappingId="viewBoard">
+                <f:param value="#{postController.boardId}"/>
+                #{postController.board.name}
+            </pretty:link>
+            <h2><h:outputLabel value="#{postController.thread.name}"/></h2>
+
+            <pretty:link mappingId="editThread" rendered='#{signInController.user.equals(postController.thread.author) || signInController.user.hasRole("ADMIN")}'>
+                <f:param value="#{postController.boardId}"/>
+                <f:param value="#{postController.threadId}"/>
+                Edit Thread
+            </pretty:link>
+        </div>
+
+        <h:dataTable value="#{postController.posts}" var="post" styleClass="table post-table" rowClasses="table-even-row,
+        table-odd-row" headerClass="table-header" columnClasses="avatar-column, user-column, post-column"
+                     first="#{postController.first}" rows="5">
+            <h:column>
+                <h:graphicImage url="/avatar?userId=#{post.author.id}" rendered="#{post.author.avatar != null}"/>
+                <h:graphicImage library="img" name="user.png" rendered="#{post.author.avatar == null}"/>
+            </h:column>
+            <h:column>
+                <h:outputText value="#{post.author.username}"/>
+                <br/>
+                <br/>
+                <h:outputText value="#{post.created}">
+                    <f:convertDateTime dateStyle="short" type="both"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <h:outputText style="white-space: pre-wrap" value="#{post.text}" />
+                <ui:fragment rendered="#{post.author.signature != null}">
+                    <hr/>
+                    <h:outputText style="white-space: pre-wrap" value="#{post.author.signature}"/>
+                </ui:fragment>
+                <pretty:link mappingId="editPost" rendered='#{signInController.user.equals(post.author) || signInController.user.hasRole("ADMIN")}'>
+                    <f:param value="#{postController.boardId}"/>
+                    <f:param value="#{postController.threadId}"/>
+                    <f:param value="#{post.id}"/>
+                    Edit post
+                </pretty:link>
+            </h:column>
+        </h:dataTable>
+        <div class="wrapper">
+            <h:form> Page
+                <ui:repeat value="#{postController.pages}" var="page">
+                    <h:commandLink value="#{page + 1} " action="#{postController.changePage(page)}" rendered="#{page != postController.currentPage}"/>
+                    <ui:fragment rendered="#{page == postController.currentPage}">
+                        #{page + 1}
+                    </ui:fragment>
+                </ui:repeat>
+            </h:form>
+            <pretty:link mappingId="addPost" rendered="#{signInController.user != null}">
+                <f:param value="#{postController.boardId}"/>
+                <f:param value="#{postController.threadId}"/>
+                New post
+            </pretty:link>
+        </div>
+    </ui:define>
+</ui:composition>

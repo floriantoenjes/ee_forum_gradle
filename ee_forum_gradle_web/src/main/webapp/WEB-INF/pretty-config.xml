@@ -1,0 +1,79 @@
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.0"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.0
+                                   		http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.0.xsd">
+
+    <!-- Begin Example RewriteRules
+
+       // These are custom rewrite-rules, and are probably not necessary for your application.
+
+       <rewrite match="^/old-url/(\w+)/$" substitute="/new_url/$1/" redirect="301" />
+
+    -->
+
+    <url-mapping id="home">
+        <pattern value="/"/>
+        <view-id value="/index.xhtml"/>
+        <action>#{boardController.loadBoards}</action>
+    </url-mapping>
+
+    <url-mapping id="viewBoard">
+        <pattern value="/board/#{threadController.boardId}"/>
+        <view-id value="/board.xhtml"/>
+        <action>#{threadController.loadThreads}</action>
+    </url-mapping>
+
+    <url-mapping id="viewThread">
+        <pattern value="/board/#{postController.boardId}/thread/#{postController.threadId}"/>
+        <view-id value="/thread.xhtml"/>
+        <action>#{postController.loadPosts}</action>
+    </url-mapping>
+
+    <url-mapping id="addThread">
+        <pattern value="/board/#{threadController.boardId}/thread/"/>
+        <view-id value="/thread_form.xhtml"/>
+    </url-mapping>
+
+    <url-mapping id="editThread">
+        <pattern value="/board/#{threadController.boardId}/thread/#{threadController.threadId}/edit"/>
+        <view-id value="/edit_thread_form.xhtml"/>
+        <action>#{threadController.initThread}</action>
+    </url-mapping>
+
+    <url-mapping id="addPost">
+        <pattern value="/board/#{postController.boardId}/thread/#{postController.threadId}/posts"/>
+        <view-id value="/post_form.xhtml"/>
+    </url-mapping>
+
+    <url-mapping id="editPost">
+        <pattern value="/board/#{postController.boardId}/thread/#{postController.threadId}/posts/#{postController.postId}"/>
+        <view-id value="/edit_post_form.xhtml"/>
+        <action>#{postController.initPost}</action>
+    </url-mapping>
+
+
+    <url-mapping id="not-found">
+        <pattern>/not-found</pattern>
+        <view-id value="/not-found.xhtml"/>
+    </url-mapping>
+
+    <url-mapping id="unauthorized">
+        <pattern>/unauthorized</pattern>
+        <view-id value="/unauthorized.xhtml"/>
+    </url-mapping>
+
+    <!-- Begin UrlMappings
+               <url-mapping id="viewCategory">
+                   <pattern value="/store/#{ cat : bean.category }/" />
+                   <view-id value="/faces/shop/store.jsf" />
+               </url-mapping>
+
+               <url-mapping id="viewItem">
+                   <pattern value="/store/#{ cat : bean.category }/#{ iid : bean.itemId }/" />
+                   <view-id value="/faces/shop/item.jsf" />
+                   <action>#{bean.loadItem}</action>
+               </url-mapping>
+
+            -->
+
+</pretty-config>

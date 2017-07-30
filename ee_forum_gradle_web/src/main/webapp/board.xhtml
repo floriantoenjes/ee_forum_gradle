@@ -1,0 +1,41 @@
+<ui:composition template="template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pretty="http://ocpsoft.com/prettyfaces">
+    <ui:define name="content">
+
+        <h2 id="subtitle"><h:outputLabel value="#{threadController.board.name}"/></h2>
+
+        <div class="wrapper">
+            <h:dataTable styleClass="table" value="#{threadController.threads}" var="thread" rowClasses="table-even-row, table-odd-row" headerClass="table-header">
+                <f:facet name="header">Threads</f:facet>
+                <h:column>
+                    <f:facet name="header">Thread</f:facet>
+                    <pretty:link mappingId="viewThread">
+                        <f:param value="#{threadController.boardId}"/>
+                        <f:param value="#{thread.id}"/>
+                        #{thread.name}
+                    </pretty:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">by User</f:facet>
+                    <h:outputText value="#{thread.author.username}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Created at</f:facet>
+                    <h:outputText value="#{thread.created}">
+                        <f:convertDateTime dateStyle="short" type="both"/>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Posts</f:facet>
+                    <h:outputText value="#{thread.posts.size().toString()}"/>
+                </h:column>
+            </h:dataTable>
+            <pretty:link mappingId="addThread" rendered="#{signInController.user != null}">
+                <f:param value="#{threadController.boardId}"/>
+                New thread
+            </pretty:link>
+        </div>
+    </ui:define>
+</ui:composition>
