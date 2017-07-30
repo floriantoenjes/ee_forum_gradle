@@ -17,6 +17,11 @@
         <action>#{boardController.loadBoards}</action>
     </url-mapping>
 
+    <url-mapping id="controlCenter">
+        <pattern value="/control-center/"/>
+        <view-id value="/control-center.xhtml"/>
+    </url-mapping>
+
     <url-mapping id="viewBoard">
         <pattern value="/board/#{threadController.boardId}"/>
         <view-id value="/board.xhtml"/>
