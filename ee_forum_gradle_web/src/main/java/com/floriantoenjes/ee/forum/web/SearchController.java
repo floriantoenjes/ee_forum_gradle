@@ -8,6 +8,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Named
 @RequestScoped
@@ -24,11 +26,14 @@ public class SearchController implements Serializable {
     public void search() {
         if (query != null) {
             results = postBean.findByText(query.toLowerCase());
-            results.forEach(result -> {
-                if (result.getText().length() >= RESULT_LENGTH) {
-                    result.setText(result.getText().substring(0, RESULT_LENGTH -1));
+            Pattern queryPattern = Pattern.compile(String.format("(.{0,%d}%s.{0,%d})",
+                    RESULT_LENGTH / 2, query, RESULT_LENGTH / 2), Pattern.CASE_INSENSITIVE);
+            for (Post result : results) {
+                Matcher queryMatcher = queryPattern.matcher(result.getText());
+                if (queryMatcher.find()) {
+                    result.setText(queryMatcher.group(0));
                 }
-            });
+            }
         }
     }
 
