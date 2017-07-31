@@ -28,7 +28,7 @@ public class SearchController implements Serializable {
         if (query != null) {
             results = postBean.findByText(query.toLowerCase());
             Pattern queryPattern = Pattern.compile(String.format("(.{0,%d}%s.{0,%d})",
-                    RESULT_LENGTH / 2, query, RESULT_LENGTH / 2), Pattern.CASE_INSENSITIVE);
+                    RESULT_LENGTH / 2, query, RESULT_LENGTH / 2), Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
             for (Post result : results) {
                 Matcher queryMatcher = queryPattern.matcher(result.getText());
                 if (queryMatcher.find()) {
