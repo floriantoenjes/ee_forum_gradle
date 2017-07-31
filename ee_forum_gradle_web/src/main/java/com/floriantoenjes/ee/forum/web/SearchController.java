@@ -19,6 +19,7 @@ public class SearchController implements Serializable {
     private List<Post> results;
 
     private static final int RESULT_LENGTH = 250;
+    private static final String ELLIPSIS = "...";
 
     @EJB
     private PostBean postBean;
@@ -31,7 +32,16 @@ public class SearchController implements Serializable {
             for (Post result : results) {
                 Matcher queryMatcher = queryPattern.matcher(result.getText());
                 if (queryMatcher.find()) {
-                    result.setText(queryMatcher.group(0));
+                    String resultText = queryMatcher.group(0);
+
+                    if (queryMatcher.start() != 0) {
+                        resultText = ELLIPSIS + resultText;
+                    }
+
+                    if (!queryMatcher.hitEnd()) {
+                        resultText = resultText + ELLIPSIS;
+                    }
+                    result.setText(resultText);
                 }
             }
         }
