@@ -17,7 +17,11 @@
             </f:facet>
             <h:column>
                 <f:facet name="header">Thread</f:facet>
-                #{result.thread.name}
+                <pretty:link mappingId="viewThread">
+                    #{result.thread.name}
+                    <f:param value="#{result.thread.board.id}"/>
+                    <f:param value="#{result.thread.id}"/>
+                </pretty:link>
             </h:column>
             <h:column>
                 <f:facet name="header">Found</f:facet>
