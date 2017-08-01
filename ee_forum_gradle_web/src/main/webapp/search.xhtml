@@ -11,17 +11,28 @@
                 <h:commandButton value="Go" action="#{searchController.search}"/>
             </h:form>
         </div>
-        <h:dataTable value="#{searchController.results}" var="result" rendered="#{searchController.results.size() > 0}">
+        <h:dataTable styleClass="table post-table" rowClasses="table-even-row, table-odd-row" headerClass="table-header" value="#{searchController.results}" var="result" rendered="#{searchController.results.size() > 0}">
             <f:facet name="header">
                 <h:outputText value="Results"/>
             </f:facet>
-            <h:column>#{result.author.username}</h:column>
             <h:column>
+                <f:facet name="header">Thread</f:facet>
+                #{result.thread.name}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Result</f:facet>
+                #{result.text}
+            </h:column>
+            <h:column>
+                <f:facet name="header">by User</f:facet>
+                #{result.author.username}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Created at</f:facet>
                 <h:outputText value="#{result.created}">
                     <f:convertDateTime dateStyle="short" type="both"/>
                 </h:outputText>
             </h:column>
-            <h:column>#{result.text}</h:column>
         </h:dataTable>
     </ui:define>
 </ui:composition>
