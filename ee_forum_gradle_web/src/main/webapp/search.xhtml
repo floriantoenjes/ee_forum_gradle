@@ -11,7 +11,9 @@
                 <h:commandButton value="Go" action="#{searchController.search}"/>
             </h:form>
         </div>
-        <h:dataTable styleClass="table post-table" rowClasses="table-even-row, table-odd-row" headerClass="table-header" value="#{searchController.results}" var="result" rendered="#{searchController.results.size() > 0}">
+        <h:dataTable styleClass="table post-table" rowClasses="table-even-row, table-odd-row" headerClass="table-header"
+                     value="#{searchController.results}" var="result" rendered="#{searchController.results.size() > 0}"
+                     columnClasses="thread-column, found-column, user-column, created-at-column">
             <f:facet name="header">
                 <h:outputText value="Results"/>
             </f:facet>
