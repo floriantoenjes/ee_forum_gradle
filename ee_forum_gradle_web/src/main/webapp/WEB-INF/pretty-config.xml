@@ -22,6 +22,7 @@
         <view-id value="/control-center.xhtml"/>
     </url-mapping>
 
+
     <url-mapping id="viewBoard">
         <pattern value="/board/#{threadController.boardId}"/>
         <view-id value="/board.xhtml"/>
@@ -29,10 +30,9 @@
     </url-mapping>
 
     <url-mapping id="addBoard">
-        <pattern value="/board"/>
+        <pattern value="/add_board"/>
         <view-id value="/board_form.xhtml"/>
     </url-mapping>
-
 
 
     <url-mapping id="viewThread">
@@ -51,6 +51,7 @@
         <view-id value="/edit_thread_form.xhtml"/>
         <action>#{threadController.initThread}</action>
     </url-mapping>
+
 
     <url-mapping id="addPost">
         <pattern value="/board/#{postController.boardId}/thread/#{postController.threadId}/posts"/>
