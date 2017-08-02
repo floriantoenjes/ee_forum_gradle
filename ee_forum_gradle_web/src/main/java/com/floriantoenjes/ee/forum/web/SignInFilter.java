@@ -55,6 +55,11 @@ public class SignInFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
 
+        /* Only an administrator can create boards */
+        } else if (path.matches("^\\/board(\\.xhtml)*$")){
+            httpServletResponse.setStatus(401);
+            servletRequest.getRequestDispatcher("/unauthorized.xhtml").forward(servletRequest, servletResponse);
+
         /* Restrict sign in and register pages to signed in user */
         } else if ((path.startsWith("/signin") || path.startsWith("/register")) && user != null) {
 
