@@ -17,6 +17,16 @@
         <action>#{boardController.loadBoards}</action>
     </url-mapping>
 
+    <url-mapping id="signIn">
+        <pattern value="/signin"/>
+        <view-id value="/signin.xhtml"/>
+    </url-mapping>
+
+    <!--<url-mapping id="register">-->
+        <!--<pattern value="/register"/>-->
+        <!--<view-id value="/register.xhtml"/>-->
+    <!--</url-mapping>-->
+
     <url-mapping id="controlCenter">
         <pattern value="/control-center/"/>
         <view-id value="/control-center.xhtml"/>

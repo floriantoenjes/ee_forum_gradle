@@ -27,7 +27,7 @@ public class RegisterController {
 
     public String register() {
         if (!user.getPassword().equals(confirmPassword)) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("the passwords have to match"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("passwords have to match"));
             return "/register.xhtml";
         }
 
