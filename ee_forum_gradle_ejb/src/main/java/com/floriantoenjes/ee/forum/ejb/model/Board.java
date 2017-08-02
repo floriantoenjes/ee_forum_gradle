@@ -32,7 +32,7 @@ public class Board {
     @Size(max = 20)
     private String name;
 
-    // ToDo: Add a description
+    // ToDo: Add a description and a way for ordering
 
     public Board() {}
 
