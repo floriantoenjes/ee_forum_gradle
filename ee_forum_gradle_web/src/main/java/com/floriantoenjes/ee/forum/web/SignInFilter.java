@@ -56,19 +56,21 @@ public class SignInFilter implements Filter {
             return;
 
         /* Only an administrator can create boards */
-        } else if (path.matches("^\\/board(\\.xhtml)*$")){
-            httpServletResponse.setStatus(401);
-            servletRequest.getRequestDispatcher("/unauthorized.xhtml").forward(servletRequest, servletResponse);
+        } else if (path.matches("^\\/board(_form\\.xhtml)*")){
 
-        /* Restrict sign in and register pages to signed in user */
+            sendUnauthorized(httpServletRequest, httpServletResponse);
+
+        /* Restrict sign in and register pages for signed in user */
         } else if ((path.startsWith("/signin") || path.startsWith("/register")) && user != null) {
 
             servletRequest.getRequestDispatcher("/").forward(servletRequest, servletResponse);
 
-        } else if ((path.startsWith("/thread_form") || path.startsWith("/post_form") || path.startsWith("/control-center")) && user == null) {
+        /* Restrict thread and post creation and control center to signed in users */
+        } else if ((path.startsWith("/thread_form") ||
+                path.startsWith("/post_form") ||
+                path.startsWith("/control-center")) && user == null) {
 
-            httpServletResponse.setStatus(401);
-            servletRequest.getRequestDispatcher("/unauthorized.xhtml").forward(servletRequest, servletResponse);
+            sendUnauthorized(httpServletRequest, httpServletResponse);
 
         /* Check if user is author of the thread */
         } else if (threadMatcher.find()) {
@@ -77,8 +79,7 @@ public class SignInFilter implements Filter {
             Thread thread = threadBean.find(threadId);
 
             if (user == null || !signInController.getUser().equals(thread.getAuthor())) {
-                httpServletResponse.setStatus(403);
-                servletRequest.getRequestDispatcher("/forbidden.xhtml").forward(servletRequest, servletResponse);
+                sendForbidden(httpServletRequest, httpServletResponse);
             }
 
         /* Check if user is author of the post */
@@ -88,12 +89,25 @@ public class SignInFilter implements Filter {
             Post post = postBean.find(postId);
 
             if (user == null || !signInController.getUser().equals(post.getAuthor())) {
-                httpServletResponse.setStatus(403);
-                servletRequest.getRequestDispatcher("/forbidden.xhtml").forward(servletRequest, servletResponse);
+                sendForbidden(httpServletRequest, httpServletResponse);
             }
         }
 
         filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    private void sendUnauthorized(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+            throws ServletException, IOException {
+        httpServletResponse.setStatus(401);
+        httpServletRequest.getRequestDispatcher("/unauthorized.xhtml")
+                .forward(httpServletRequest, httpServletResponse);
+    }
+
+    private void sendForbidden(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+            throws ServletException, IOException {
+        httpServletResponse.setStatus(403);
+        httpServletRequest.getRequestDispatcher("/forbidden.xhtml")
+                .forward(httpServletRequest, httpServletResponse);
     }
 
     @Override
