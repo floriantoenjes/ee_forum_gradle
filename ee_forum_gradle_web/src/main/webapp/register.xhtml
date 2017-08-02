@@ -18,7 +18,10 @@
                 <h:message for="password"/>
 
                 <h:outputLabel for="confirm-password" value="Confirm Password:"/>
-                <h:inputSecret id="confirm-password" value="#{registerController.confirmPassword}"/>
+                <h:inputSecret id="confirm-password" value="#{registerController.confirmPassword}">
+                    <f:validator validatorId="confirmPasswordValidator"/>
+                    <f:attribute name="password1" value="#{component.parent.parent.clientId}:password"/>
+                </h:inputSecret>
                 <h:message for="confirm-password"/>
 
                 <h:outputLabel for="username" value="Username:"/>
@@ -26,7 +29,6 @@
                 <h:message for="username"/>
 
                 <h:commandButton action="#{registerController.register}" value="Register"/>
-                <h:message for="confirm-password"/>
             </h:panelGrid>
         </h:form>
     </ui:define>

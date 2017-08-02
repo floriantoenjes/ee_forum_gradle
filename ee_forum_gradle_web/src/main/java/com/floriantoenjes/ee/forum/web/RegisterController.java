@@ -26,11 +26,6 @@ public class RegisterController {
     private UserBean userBean;
 
     public String register() {
-        if (!user.getPassword().equals(confirmPassword)) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("passwords have to match"));
-            return "/register.xhtml";
-        }
-
         user = userBean.register(user);
         signInController.setUser(user);
 
