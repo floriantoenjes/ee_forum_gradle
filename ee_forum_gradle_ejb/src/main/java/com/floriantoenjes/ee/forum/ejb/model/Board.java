@@ -32,6 +32,8 @@ public class Board {
     @Size(max = 20)
     private String name;
 
+    // ToDo: Add a description
+
     public Board() {}
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)

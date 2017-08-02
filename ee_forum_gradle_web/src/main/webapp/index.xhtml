@@ -21,5 +21,10 @@
                 A Description of Board1
             </h:column>
         </h:dataTable>
+        <div class="wrapper">
+            <pretty:link mappingId="addBoard" rendered="#{signInController.user.hasRole('ADMIN')}">
+                New Board
+            </pretty:link>
+        </div>
     </ui:define>
 </ui:composition>

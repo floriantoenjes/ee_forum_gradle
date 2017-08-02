@@ -23,4 +23,9 @@ public class BoardBean {
     public List<Board> findAll() {
         return em.createNamedQuery("Board.findAll").getResultList();
     }
+
+    public Board createBoard(Board board) {
+        em.persist(board);
+        return board;
+    }
 }
