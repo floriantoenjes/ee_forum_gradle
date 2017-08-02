@@ -42,7 +42,7 @@
     </url-mapping>
 
     <url-mapping id="addThread">
-        <pattern value="/board/#{threadController.boardId}/thread/"/>
+        <pattern value="/board/#{threadController.boardId}/add_thread/"/>
         <view-id value="/thread_form.xhtml"/>
     </url-mapping>
 
@@ -59,7 +59,7 @@
     </url-mapping>
 
     <url-mapping id="editPost">
-        <pattern value="/board/#{postController.boardId}/thread/#{postController.threadId}/posts/#{postController.postId}/"/>
+        <pattern value="/board/#{postController.boardId}/thread/#{postController.threadId}/posts/#{postController.postId}/edit/"/>
         <view-id value="/edit_post_form.xhtml"/>
         <action>#{postController.initPost}</action>
     </url-mapping>

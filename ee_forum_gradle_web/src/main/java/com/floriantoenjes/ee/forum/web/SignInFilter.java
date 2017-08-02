@@ -45,7 +45,7 @@ public class SignInFilter implements Filter {
         Pattern threadPattern = Pattern.compile("^/board/\\d+/thread/(\\d+)/edit/$");
         Matcher threadMatcher = threadPattern.matcher(path);
 
-        Pattern postPattern = Pattern.compile("^/board/\\d+/thread/\\d+/posts/(\\d+)/$");
+        Pattern postPattern = Pattern.compile("^/board/\\d+/thread/\\d+/posts/(\\d+)/edit/$");
         Matcher postMatcher = postPattern.matcher(path);
 
         User user = signInController.getUser();
