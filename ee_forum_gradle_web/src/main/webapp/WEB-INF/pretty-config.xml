@@ -24,19 +24,19 @@
 
 
     <url-mapping id="viewBoard">
-        <pattern value="/board/#{threadController.boardId}"/>
+        <pattern value="/board/#{threadController.boardId}/"/>
         <view-id value="/board.xhtml"/>
         <action>#{threadController.loadThreads}</action>
     </url-mapping>
 
     <url-mapping id="addBoard">
-        <pattern value="/add_board"/>
+        <pattern value="/add_board/"/>
         <view-id value="/board_form.xhtml"/>
     </url-mapping>
 
 
     <url-mapping id="viewThread">
-        <pattern value="/board/#{postController.boardId}/thread/#{postController.threadId}"/>
+        <pattern value="/board/#{postController.boardId}/thread/#{postController.threadId}/"/>
         <view-id value="/thread.xhtml"/>
         <action>#{postController.loadPosts}</action>
     </url-mapping>
@@ -47,31 +47,31 @@
     </url-mapping>
 
     <url-mapping id="editThread">
-        <pattern value="/board/#{threadController.boardId}/thread/#{threadController.threadId}/edit"/>
+        <pattern value="/board/#{threadController.boardId}/thread/#{threadController.threadId}/edit/"/>
         <view-id value="/edit_thread_form.xhtml"/>
         <action>#{threadController.initThread}</action>
     </url-mapping>
 
 
     <url-mapping id="addPost">
-        <pattern value="/board/#{postController.boardId}/thread/#{postController.threadId}/posts"/>
+        <pattern value="/board/#{postController.boardId}/thread/#{postController.threadId}/add_post/"/>
         <view-id value="/post_form.xhtml"/>
     </url-mapping>
 
     <url-mapping id="editPost">
-        <pattern value="/board/#{postController.boardId}/thread/#{postController.threadId}/posts/#{postController.postId}"/>
+        <pattern value="/board/#{postController.boardId}/thread/#{postController.threadId}/posts/#{postController.postId}/"/>
         <view-id value="/edit_post_form.xhtml"/>
         <action>#{postController.initPost}</action>
     </url-mapping>
 
 
     <url-mapping id="not-found">
-        <pattern>/not-found</pattern>
+        <pattern value="/not-found/"/>
         <view-id value="/not-found.xhtml"/>
     </url-mapping>
 
     <url-mapping id="unauthorized">
-        <pattern>/unauthorized</pattern>
+        <pattern value="/unauthorized/"/>
         <view-id value="/unauthorized.xhtml"/>
     </url-mapping>
 

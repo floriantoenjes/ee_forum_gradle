@@ -42,10 +42,10 @@ public class SignInFilter implements Filter {
 
         String path = httpServletRequest.getRequestURI().substring(httpServletRequest.getContextPath().length());
 
-        Pattern threadPattern = Pattern.compile("^/board/\\d+/thread/(\\d+)/edit$");
+        Pattern threadPattern = Pattern.compile("^/board/\\d+/thread/(\\d+)/edit/$");
         Matcher threadMatcher = threadPattern.matcher(path);
 
-        Pattern postPattern = Pattern.compile("^/board/\\d+/thread/\\d+/posts/(\\d+)$");
+        Pattern postPattern = Pattern.compile("^/board/\\d+/thread/\\d+/posts/(\\d+)/$");
         Matcher postMatcher = postPattern.matcher(path);
 
         User user = signInController.getUser();
