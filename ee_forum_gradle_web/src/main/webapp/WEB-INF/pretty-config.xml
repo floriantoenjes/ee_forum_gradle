@@ -37,6 +37,12 @@
         <view-id value="/search.xhtml"/>
     </url-mapping>
 
+    <url-mapping id="searchResults">
+        <pattern value="/search/#{searchController.query}"/>
+        <view-id value="/search.xhtml"/>
+        <action>#{searchController.search}</action>
+    </url-mapping>
+
 
     <url-mapping id="viewBoard">
         <pattern value="/board/#{threadController.boardId}/"/>
