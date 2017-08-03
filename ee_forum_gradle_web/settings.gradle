@@ -1,2 +1,3 @@
 rootProject.name = 'ee_forum_gradle_web'
 
+include('ee_forum_gradle_ejb')
