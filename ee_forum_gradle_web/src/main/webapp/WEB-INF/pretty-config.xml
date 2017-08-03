@@ -62,6 +62,12 @@
         <action>#{postController.loadPosts}</action>
     </url-mapping>
 
+    <url-mapping id="viewThreadPages">
+        <pattern value="/board/#{postController.boardId}/thread/#{postController.threadId}/page/#{postController.currentPage}"/>
+        <view-id value="/thread.xhtml"/>
+        <action>#{postController.loadPosts}</action>
+    </url-mapping>
+
     <url-mapping id="addThread">
         <pattern value="/board/#{threadController.boardId}/add_thread/"/>
         <view-id value="/thread_form.xhtml"/>

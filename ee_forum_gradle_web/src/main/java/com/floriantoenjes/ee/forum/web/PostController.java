@@ -60,6 +60,8 @@ public class PostController implements Serializable {
         board = thread.getBoard();
         posts = postBean.findByThreadId(threadId);
 
+        first = currentPage * PAGE_SIZE;
+
         pages.clear();
         IntStream.range(0, (int) Math.ceil(posts.size() / (double) PAGE_SIZE)).forEach(pages::add);
 

@@ -51,7 +51,12 @@
         <div class="wrapper">
             <h:form> Page
                 <ui:repeat value="#{postController.pages}" var="page">
-                    <h:commandLink value="#{page + 1} " action="#{postController.changePage(page)}" rendered="#{page != postController.currentPage}"/>
+                    <pretty:link mappingId="viewThreadPages" rendered="#{page != postController.currentPage}">
+                        <f:param value="#{postController.boardId}"/>
+                        <f:param value="#{postController.threadId}"/>
+                        <f:param value="#{page}"/>
+                        #{page + 1}
+                    </pretty:link>
                     <ui:fragment rendered="#{page == postController.currentPage}">
                         #{page + 1}
                     </ui:fragment>
