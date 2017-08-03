@@ -10,6 +10,8 @@
             <h:panelGrid columns="2">
                 <h:outputLabel for="name" value="Name:"/>
                 <h:inputText id="name" value="#{boardController.board.name}"/>
+                <h:outputLabel for="description" value="Description:"/>
+                <h:inputTextarea id="description" value="#{boardController.board.description}" cols="40" rows="5"/>
                 <h:commandButton action="#{boardController.createBoard}"
                                  value="Create Board"/>
             </h:panelGrid>
