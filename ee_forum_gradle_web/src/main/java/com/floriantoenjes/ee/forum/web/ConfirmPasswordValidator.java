@@ -19,7 +19,7 @@ public class ConfirmPasswordValidator implements Validator{
 
         String password2 = (String) value;
 
-        if (password1 != null && password2 != null && !password1.equals(password2)) {
+        if (password1 == null || password2 == null || !password1.equals(password2)) {
             throw new ValidatorException(new FacesMessage("passwords have to match"));
         }
     }
