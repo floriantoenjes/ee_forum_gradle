@@ -32,6 +32,9 @@ public class Board {
     @Size(max = 20)
     private String name;
 
+    @Size(max = 120, message = "has to be less than 120 characters")
+    private String description;
+
     // ToDo: Add a description and a way for ordering
 
     public Board() {}
@@ -69,5 +72,13 @@ public class Board {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
