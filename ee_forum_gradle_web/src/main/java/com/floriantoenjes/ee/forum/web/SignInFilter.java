@@ -58,7 +58,7 @@ public class SignInFilter implements Filter {
         /* Only an administrator can create boards */
         } else if (path.matches("^\\/board(_form\\.xhtml)*")){
 
-            sendUnauthorized(httpServletRequest, httpServletResponse);
+            sendForbidden(httpServletRequest, httpServletResponse);
 
         /* Restrict sign in and register pages for signed in user */
         } else if ((path.startsWith("/signin") || path.startsWith("/register")) && user != null) {
