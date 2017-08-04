@@ -8,7 +8,7 @@
             <h2><h:outputLabel value="Boards"/></h2>
         </div>
 
-        <h:dataTable styleClass="table" value="#{boardController.boards}" var="board">
+        <h:dataTable styleClass="table post-table" value="#{boardController.boards}" rowClasses="table-even-row, table-odd-row" var="board">
             <h:column>
                 <h:panelGrid columns="1">
                     <pretty:link mappingId="viewBoard">
