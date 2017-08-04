@@ -71,11 +71,6 @@ public class PostController implements Serializable {
         return null;
     }
 
-    public void changePage(int page) {
-        currentPage = page;
-        first = page * PAGE_SIZE;
-    }
-
     public String createPost(User author) {
         post.setThread(threadBean.find(threadId));
         post.setAuthor(author);
