@@ -4,7 +4,12 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pretty="http://ocpsoft.com/prettyfaces">
     <ui:define name="content">
 
-        <h2 id="subtitle"><h:outputLabel value="#{threadController.board.name}"/></h2>
+        <div class="thread-wrapper">
+            <pretty:link mappingId="home">
+                Overview
+            </pretty:link>
+            <h3><h:outputLabel value="#{threadController.board.name}"/></h3>
+        </div>
 
         <h:dataTable styleClass="table post-table" value="#{threadController.threads}" var="thread" rowClasses="table-even-row, table-odd-row" headerClass="table-header">
             <f:facet name="header">Threads</f:facet>
