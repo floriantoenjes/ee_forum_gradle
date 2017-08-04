@@ -6,6 +6,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Stateless
@@ -21,7 +22,8 @@ public class BoardBean {
 
     @SuppressWarnings("unchecked")
     public List<Board> findAll() {
-        return em.createNamedQuery("Board.findAll").getResultList();
+        TypedQuery<Board> query = em.createQuery("SELECT DISTINCT b FROM Board b LEFT JOIN FETCH b.threads", Board.class);
+        return query.getResultList();
     }
 
     public Board createBoard(Board board) {

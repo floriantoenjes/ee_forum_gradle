@@ -20,6 +20,10 @@
                 <f:facet name="header">Description</f:facet>
                 #{board.description}
             </h:column>
+            <h:column>
+                <f:facet name="header">Threads</f:facet>
+                #{board.threads.size()}
+            </h:column>
         </h:dataTable>
         <div class="wrapper">
             <pretty:link mappingId="addBoard" rendered="#{signInController.user.hasRole('ADMIN')}">
