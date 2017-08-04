@@ -35,6 +35,7 @@ body {
 }
 
 .table-odd-row {
+    background-color: lightgray;
 }
 
 .table td {
