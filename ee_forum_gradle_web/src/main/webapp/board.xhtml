@@ -31,9 +31,11 @@
                 <h:outputText value="#{thread.posts.size().toString()}"/>
             </h:column>
         </h:dataTable>
-        <pretty:link mappingId="addThread" rendered="#{signInController.user != null}">
-            <f:param value="#{threadController.boardId}"/>
-            New thread
-        </pretty:link>
+        <div class="wrapper">
+            <pretty:link mappingId="addThread" rendered="#{signInController.user != null}" styleClass="center">
+                <f:param value="#{threadController.boardId}"/>
+                New thread
+            </pretty:link>
+        </div>
     </ui:define>
 </ui:composition>

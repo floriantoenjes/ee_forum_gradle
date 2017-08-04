@@ -23,7 +23,7 @@ body {
 
 .table {
     margin: 1em auto 1em;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
 }
 
 .table-header {

@@ -10,14 +10,14 @@
 
         <h:dataTable styleClass="table post-table" value="#{boardController.boards}" rowClasses="table-even-row, table-odd-row" var="board">
             <h:column>
-                <h:panelGrid columns="1">
-                    <pretty:link mappingId="viewBoard">
-                        <f:param value="#{board.id}"/>
-                        #{board.name}
-                    </pretty:link>
-                </h:panelGrid>
+                <f:facet name="header">Name</f:facet>
+                <pretty:link mappingId="viewBoard">
+                    <f:param value="#{board.id}"/>
+                    #{board.name}
+                </pretty:link>
             </h:column>
             <h:column>
+                <f:facet name="header">Description</f:facet>
                 #{board.description}
             </h:column>
         </h:dataTable>
