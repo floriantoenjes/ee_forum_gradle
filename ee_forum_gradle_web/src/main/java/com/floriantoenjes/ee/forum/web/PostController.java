@@ -60,7 +60,11 @@ public class PostController implements Serializable {
         board = thread.getBoard();
         posts = postBean.findByThreadId(threadId);
 
-        first = currentPage * PAGE_SIZE;
+        if (currentPage * PAGE_SIZE <= posts.size()) {
+            first = currentPage * PAGE_SIZE;
+        } else {
+            return "pretty:not-found";
+        }
 
         pages.clear();
         IntStream.range(0, (int) Math.ceil(posts.size() / (double) PAGE_SIZE)).forEach(pages::add);
