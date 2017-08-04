@@ -12,7 +12,8 @@
             </pretty:link>
             <h2><h:outputLabel value="#{postController.thread.name}"/></h2>
 
-            <pretty:link mappingId="editThread" rendered='#{signInController.user.equals(postController.thread.author) || signInController.user.hasRole("ADMIN")}'>
+            <pretty:link mappingId="editThread" rendered='#{signInController.user.equals(postController.thread.author)
+            || signInController.user.hasRole("ADMIN")}'>
                 <f:param value="#{postController.boardId}"/>
                 <f:param value="#{postController.threadId}"/>
                 Edit Thread
@@ -20,8 +21,7 @@
         </div>
 
         <h:dataTable value="#{postController.posts}" var="post" styleClass="table post-table" rowClasses="table-even-row,
-        table-odd-row" headerClass="table-header" columnClasses="avatar-column, user-column, post-column"
-                     first="#{postController.first}" rows="5">
+        table-odd-row" headerClass="table-header" columnClasses="avatar-column, user-column, post-column" rows="5">
             <h:column>
                 <h:graphicImage url="/avatar?userId=#{post.author.id}" rendered="#{post.author.avatar != null}"/>
                 <h:graphicImage library="img" name="user.png" rendered="#{post.author.avatar == null}"/>

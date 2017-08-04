@@ -31,7 +31,6 @@ public class PostController implements Serializable {
     private Thread thread;
     private List<Post> posts;
 
-    private int first;
     private int currentPage;
     private List<Integer> pages = new ArrayList<>();
 
@@ -155,14 +154,6 @@ public class PostController implements Serializable {
 
     public void setPages(List<Integer> pages) {
         this.pages = pages;
-    }
-
-    public int getFirst() {
-        return first;
-    }
-
-    public void setFirst(int first) {
-        this.first = first;
     }
 
     public int getCurrentPage() {
