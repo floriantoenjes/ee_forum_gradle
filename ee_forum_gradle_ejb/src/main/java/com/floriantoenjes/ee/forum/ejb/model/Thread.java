@@ -46,6 +46,9 @@ public class Thread implements Serializable {
     @OneToMany(mappedBy = "thread", cascade = CascadeType.REMOVE)
     private List<Post> posts;
 
+    @OneToOne
+    private Post lastPost;
+
     public Thread() {}
 
     public Long getId() {
@@ -102,5 +105,13 @@ public class Thread implements Serializable {
         }
         post.setThread(this);
         return this.posts.add(post);
+    }
+
+    public Post getLastPost() {
+        return lastPost;
+    }
+
+    public void setLastPost(Post lastPost) {
+        this.lastPost = lastPost;
     }
 }
