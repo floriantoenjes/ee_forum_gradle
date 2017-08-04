@@ -25,12 +25,20 @@ public class PostBean {
         return em.find(Post.class, id);
     }
 
-    public List<Post> findByThreadId(Long threadId) {
+    public List<Post> findByThreadId(Long threadId, int currentPage, int page_size) {
         TypedQuery<Post> query = em.createQuery("SELECT p FROM Post p WHERE p.thread.id = :threadId " +
                 "ORDER BY p.created ASC ", Post.class);
         query.setParameter("threadId", threadId);
+        query.setFirstResult(currentPage * page_size);
+        query.setMaxResults(page_size);
 
         return query.getResultList();
+    }
+
+    public long getTotalPostsByThreadId(Long threadId) {
+        Query queryTotal = em.createQuery("SELECT COUNT(p.id) FROM Post p WHERE p.thread.id = :threadId ");
+        queryTotal.setParameter("threadId", threadId);
+        return (long) queryTotal.getSingleResult();
     }
 
     public List<Post> findByText(String text) {

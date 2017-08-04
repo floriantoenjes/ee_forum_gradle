@@ -58,16 +58,15 @@ public class PostController implements Serializable {
             return "pretty:not-found";
         }
         board = thread.getBoard();
-        posts = postBean.findByThreadId(threadId);
+        posts = postBean.findByThreadId(threadId, currentPage, PAGE_SIZE);
+        long totalPosts = postBean.getTotalPostsByThreadId(threadId);
 
-        if (currentPage * PAGE_SIZE <= posts.size()) {
-            first = currentPage * PAGE_SIZE;
-        } else {
+        if (currentPage * PAGE_SIZE > totalPosts) {
             return "pretty:not-found";
         }
 
         pages.clear();
-        IntStream.range(0, (int) Math.ceil(posts.size() / (double) PAGE_SIZE)).forEach(pages::add);
+        IntStream.range(0, (int) Math.ceil(totalPosts / (double) PAGE_SIZE)).forEach(pages::add);
 
         return null;
     }
