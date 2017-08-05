@@ -12,6 +12,8 @@ import java.util.List;
 @Table(schema = "FORUM", name = "THREAD")
 public class Thread implements Serializable {
     private static final long serialVersionUID = 1L;
+    private static final int PAGE_SIZE = 5;
+
 
     @Id
     @SequenceGenerator(
@@ -51,9 +53,6 @@ public class Thread implements Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
-
-    @Transient
-    private Long pages;
 
     public Thread() {}
 
@@ -130,10 +129,7 @@ public class Thread implements Serializable {
     }
 
     public Long getPages() {
-        return pages;
+        return (long) Math.ceil((posts.size() - 1) / PAGE_SIZE );
     }
 
-    public void setPages(Long pages) {
-        this.pages = pages;
-    }
 }
