@@ -49,6 +49,9 @@ public class Thread implements Serializable {
     @OneToOne
     private Post lastPost;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updated;
+
     public Thread() {}
 
     public Long getId() {
@@ -113,5 +116,13 @@ public class Thread implements Serializable {
 
     public void setLastPost(Post lastPost) {
         this.lastPost = lastPost;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
     }
 }

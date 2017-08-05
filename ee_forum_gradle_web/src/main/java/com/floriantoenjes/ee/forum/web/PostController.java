@@ -78,6 +78,8 @@ public class PostController implements Serializable {
 
         postBean.createPost(post);
         post.getThread().setLastPost(post);
+        thread.setUpdated(new Date());
+
         threadBean.editThread(thread);
 
         return "pretty:viewThread";
