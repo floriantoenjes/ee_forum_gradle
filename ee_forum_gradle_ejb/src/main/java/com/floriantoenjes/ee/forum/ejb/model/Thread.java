@@ -52,6 +52,9 @@ public class Thread implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
+    @Transient
+    private Long pages;
+
     public Thread() {}
 
     public Long getId() {
@@ -124,5 +127,13 @@ public class Thread implements Serializable {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public Long getPages() {
+        return pages;
+    }
+
+    public void setPages(Long pages) {
+        this.pages = pages;
     }
 }

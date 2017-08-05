@@ -24,6 +24,7 @@ import java.util.List;
 @ViewScoped
 public class ThreadController implements Serializable {
     private static final long serialVersionUID = 1L;
+    private static final int PAGE_SIZE = 5;
 
     private Long threadId;
 
@@ -63,6 +64,9 @@ public class ThreadController implements Serializable {
             return "pretty:not-found";
         }
         threads = threadBean.findByBoardId(boardId);
+        for (Thread thread : threads) {
+            thread.setPages((long) Math.ceil((thread.getPosts().size() - 1) / PAGE_SIZE));
+        }
 
         return null;
     }

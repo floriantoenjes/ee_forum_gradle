@@ -24,6 +24,12 @@ public class ThreadBean {
         return em.find(Thread.class, id);
     }
 
+    public Thread findWithPosts(Long id) {
+        TypedQuery<Thread> query = em.createQuery("SELECT t FROM Thread t JOIN FETCH t.posts WHERE t.id= :id", Thread.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
+    }
+
     public List<Thread> findByBoardId(Long boardId) {
         TypedQuery<Thread> query = em.createQuery("SELECT DISTINCT t FROM Thread t JOIN FETCH t.posts " +
                 "WHERE t.board.id = :boardId ORDER BY t.updated DESC", Thread.class);
