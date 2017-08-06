@@ -41,6 +41,9 @@ public class Board {
     @OneToOne(mappedBy = "boardOneToOne")
     private Thread lastThread;
 
+    @Column(name = "THREAD_COUNT")
+    private Long threadCount;
+
     // ToDo: Add a way for ordering
 
     public Board() {}
@@ -58,6 +61,7 @@ public class Board {
             threads = new ArrayList<>();
         }
         thread.setBoard(this);
+        threadCount = threadCount == null ? 1 : threadCount + 1;
         return this.threads.add(thread);
     }
 
@@ -92,5 +96,13 @@ public class Board {
     public void setLastThread(Thread lastThread) {
         this.lastThread = lastThread;
         lastThread.setBoardOneToOne(this);
+    }
+
+    public Long getThreadCount() {
+        return threadCount;
+    }
+
+    public void setThreadCount(Long threadCount) {
+        this.threadCount = threadCount;
     }
 }

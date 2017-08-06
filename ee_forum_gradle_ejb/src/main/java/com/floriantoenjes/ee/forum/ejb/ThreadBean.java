@@ -25,7 +25,7 @@ public class ThreadBean {
     }
 
     public Thread findWithPosts(Long id) {
-        TypedQuery<Thread> query = em.createQuery("SELECT t FROM Thread t JOIN FETCH t.posts WHERE t.id= :id", Thread.class);
+        TypedQuery<Thread> query = em.createQuery("SELECT t FROM Thread t LEFT JOIN FETCH t.posts WHERE t.id= :id", Thread.class);
         query.setParameter("id", id);
         return query.getSingleResult();
     }

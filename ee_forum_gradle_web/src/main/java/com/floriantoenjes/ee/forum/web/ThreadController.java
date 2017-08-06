@@ -70,9 +70,11 @@ public class ThreadController implements Serializable {
     public String createThread(User user) {
 
         thread.setAuthor(user);
-        thread.setBoard(getBoard());
-        thread.setCreated(new Date());
+        Board board = boardBean.findWithTreads(boardId);
+        board.addThread(thread);
+        boardBean.editBoard(board);
 
+        thread.setCreated(new Date());
         thread = threadBean.createThread(thread);
 
         post.setAuthor(user);
@@ -80,6 +82,7 @@ public class ThreadController implements Serializable {
         thread.addPost(post);
 
         postBean.createPost(post);
+        threadBean.editThread(thread);
 
         return "pretty:viewBoard";
     }
