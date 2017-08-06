@@ -37,8 +37,8 @@
         <view-id value="/search.xhtml"/>
     </url-mapping>
 
-    <url-mapping id="searchResults">
-        <pattern value="/search/#{searchController.query}"/>
+    <url-mapping id="searchResults" parentId="search">
+        <pattern value="#{searchController.query}"/>
         <view-id value="/search.xhtml"/>
         <action>#{searchController.search}</action>
     </url-mapping>
@@ -62,8 +62,8 @@
         <action>#{postController.loadPosts}</action>
     </url-mapping>
 
-    <url-mapping id="viewThreadPages">
-        <pattern value="/board/#{postController.boardId}/thread/#{postController.threadId}/page/#{postController.currentPage}"/>
+    <url-mapping id="viewThreadPages" parentId="viewThread">
+        <pattern value="page/#{postController.currentPage}"/>
         <view-id value="/thread.xhtml"/>
         <action>#{postController.loadPosts}</action>
     </url-mapping>
