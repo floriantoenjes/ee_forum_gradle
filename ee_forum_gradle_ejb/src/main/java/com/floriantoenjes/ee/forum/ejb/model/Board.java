@@ -35,12 +35,15 @@ public class Board {
     @Size(max = 120, message = "has to be less than 120 characters")
     private String description;
 
-    // ToDo: Add a description and a way for ordering
-
-    public Board() {}
-
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
     private List<Thread> threads;
+
+    @OneToOne(mappedBy = "boardOneToOne")
+    private Thread lastThread;
+
+    // ToDo: Add a way for ordering
+
+    public Board() {}
 
     public List<Thread> getThreads() {
         return threads;
@@ -80,5 +83,13 @@ public class Board {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Thread getLastThread() {
+        return lastThread;
+    }
+
+    public void setLastThread(Thread lastThread) {
+        this.lastThread = lastThread;
     }
 }

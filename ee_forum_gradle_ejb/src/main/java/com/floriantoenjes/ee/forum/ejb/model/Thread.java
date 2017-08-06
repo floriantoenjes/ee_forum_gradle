@@ -54,6 +54,10 @@ public class Thread implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
+    @OneToOne
+    @JoinColumn(name = "BOARD_ONE_TO_ONE_ID")
+    private Board boardOneToOne;
+
     public Thread() {}
 
     public Long getId() {
@@ -114,7 +118,6 @@ public class Thread implements Serializable {
         updated = new Date();
         post.setThreadOneToOne(this);
 
-
         return this.posts.add(post);
     }
 
@@ -138,4 +141,11 @@ public class Thread implements Serializable {
         return (long) Math.ceil((posts.size() - 1) / PAGE_SIZE );
     }
 
+    public Board getBoardOneToOne() {
+        return boardOneToOne;
+    }
+
+    public void setBoardOneToOne(Board boardOneToOne) {
+        this.boardOneToOne = boardOneToOne;
+    }
 }
