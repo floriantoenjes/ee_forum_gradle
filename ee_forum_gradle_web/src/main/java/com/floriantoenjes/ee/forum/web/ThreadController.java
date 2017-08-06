@@ -76,8 +76,8 @@ public class ThreadController implements Serializable {
         thread = threadBean.createThread(thread);
 
         post.setAuthor(user);
-        post.setThread(thread);
         post.setCreated(new Date());
+        thread.addPost(post);
 
         postBean.createPost(post);
 

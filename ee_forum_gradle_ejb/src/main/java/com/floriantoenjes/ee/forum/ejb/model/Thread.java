@@ -2,6 +2,7 @@ package com.floriantoenjes.ee.forum.ejb.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -57,6 +58,9 @@ public class Thread implements Serializable {
     @OneToOne
     @JoinColumn(name = "BOARD_ONE_TO_ONE_ID")
     private Board boardOneToOne;
+
+    @Column(name = "POST_COUNT")
+    private Long postCount;
 
     public Thread() {}
 
@@ -120,6 +124,8 @@ public class Thread implements Serializable {
 
         board.setLastThread(this);
 
+        postCount = postCount == null ? 1 : postCount + 1;
+
         return this.posts.add(post);
     }
 
@@ -140,7 +146,10 @@ public class Thread implements Serializable {
     }
 
     public Long getPages() {
-        return (long) Math.ceil((posts.size() - 1) / PAGE_SIZE );
+        if (postCount != null && postCount > 0) {
+            return (long) Math.ceil((postCount - 1) / PAGE_SIZE );
+        }
+        return 0L;
     }
 
     public Board getBoardOneToOne() {
@@ -149,5 +158,13 @@ public class Thread implements Serializable {
 
     public void setBoardOneToOne(Board boardOneToOne) {
         this.boardOneToOne = boardOneToOne;
+    }
+
+    public Long getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(Long postCount) {
+        this.postCount = postCount;
     }
 }
