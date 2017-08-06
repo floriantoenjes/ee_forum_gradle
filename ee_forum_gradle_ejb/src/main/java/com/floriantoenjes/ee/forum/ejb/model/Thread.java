@@ -109,6 +109,12 @@ public class Thread implements Serializable {
             posts = new ArrayList<>();
         }
         post.setThread(this);
+
+        lastPost = post;
+        updated = new Date();
+        post.setThreadOneToOne(this);
+
+
         return this.posts.add(post);
     }
 
@@ -117,7 +123,6 @@ public class Thread implements Serializable {
     }
 
     public void setLastPost(Post lastPost) {
-        lastPost.setThreadOneToOne(this);
         this.lastPost = lastPost;
     }
 
