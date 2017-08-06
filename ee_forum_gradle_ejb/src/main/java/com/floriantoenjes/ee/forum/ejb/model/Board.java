@@ -91,5 +91,6 @@ public class Board {
 
     public void setLastThread(Thread lastThread) {
         this.lastThread = lastThread;
+        lastThread.setBoardOneToOne(this);
     }
 }
