@@ -48,7 +48,7 @@ public class Thread implements Serializable {
     @OneToMany(mappedBy = "thread", cascade = CascadeType.REMOVE)
     private List<Post> posts;
 
-    @OneToOne
+    @OneToOne(mappedBy = "threadOneToOne")
     private Post lastPost;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -117,6 +117,7 @@ public class Thread implements Serializable {
     }
 
     public void setLastPost(Post lastPost) {
+        lastPost.setThreadOneToOne(this);
         this.lastPost = lastPost;
     }
 

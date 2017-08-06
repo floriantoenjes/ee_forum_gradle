@@ -33,6 +33,10 @@ public class Post implements Serializable {
     @ManyToOne
     private Thread thread;
 
+    @OneToOne
+    @JoinColumn(name = "THREAD_ONE_TO_ONE_ID")
+    private Thread threadOneToOne;
+
     @NotNull
     @ManyToOne
     private User author;
@@ -81,5 +85,13 @@ public class Post implements Serializable {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public Thread getThreadOneToOne() {
+        return threadOneToOne;
+    }
+
+    public void setThreadOneToOne(Thread threadOneToOne) {
+        this.threadOneToOne = threadOneToOne;
     }
 }

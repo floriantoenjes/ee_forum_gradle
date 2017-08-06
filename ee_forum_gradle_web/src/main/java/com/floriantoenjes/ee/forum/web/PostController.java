@@ -76,8 +76,8 @@ public class PostController implements Serializable {
         post.setAuthor(author);
         post.setCreated(new Date());
 
-        postBean.createPost(post);
         post.getThread().setLastPost(post);
+        postBean.createPost(post);
         thread.setUpdated(new Date());
 
         threadBean.editThread(thread);
