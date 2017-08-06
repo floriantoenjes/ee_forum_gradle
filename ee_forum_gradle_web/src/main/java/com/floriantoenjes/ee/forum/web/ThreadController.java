@@ -94,7 +94,10 @@ public class ThreadController implements Serializable {
     }
 
     public String deleteThread() {
+        Board board = thread.getBoard();
+        board.setThreadCount(board.getThreadCount() - 1);
         threadBean.deleteThread(thread);
+        boardBean.editBoard(board);
 
         return "pretty:viewBoard";
     }
