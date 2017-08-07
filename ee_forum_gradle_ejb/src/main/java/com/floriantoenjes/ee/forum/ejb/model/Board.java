@@ -106,11 +106,14 @@ public class Board {
         return lastThread;
     }
 
-    public void clearLastThread() {
-        if (lastThread != null) {
+    public Optional<Thread> clearLastThread() {
+        Thread oldLastThread = lastThread;
+        if (oldLastThread != null) {
             lastThread.setBoardOneToOne(null);
             lastThread = null;
+            return Optional.of(oldLastThread);
         }
+        return Optional.empty();
     }
 
     public void setLastThread(Thread lastThread) {
