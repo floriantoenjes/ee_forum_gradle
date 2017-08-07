@@ -45,6 +45,9 @@ public class Post implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
+    @Column(name = "POST_NUMBER")
+    private Long postNumber;
+
     public Post() {}
 
     public Long getId() {
@@ -93,6 +96,14 @@ public class Post implements Serializable {
 
     public void setThreadOneToOne(Thread threadOneToOne) {
         this.threadOneToOne = threadOneToOne;
+    }
+
+    public Long getPostNumber() {
+        return postNumber;
+    }
+
+    public void setPostNumber(Long postNumber) {
+        this.postNumber = postNumber;
     }
 
     @Override

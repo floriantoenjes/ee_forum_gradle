@@ -120,6 +120,7 @@ public class Thread implements Serializable {
 
         lastPost = post;
         updated = new Date();
+        post.setPostNumber((long) getPosts().size() + 1);
         post.setThreadOneToOne(this);
 
         board.setLastThread(this);
