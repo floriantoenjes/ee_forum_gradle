@@ -172,7 +172,7 @@ public class Thread implements Serializable {
 
     public long getPages() {
         if (postCount != null && postCount > - 1) {
-            return (long) Math.ceil((postCount - 1) / PAGE_SIZE );
+            return (long) Math.ceil((postCount) / (double) PAGE_SIZE ) - 1;
         }
         return 0L;
     }
