@@ -133,9 +133,15 @@ public class Thread implements Serializable {
 
     public boolean removePost(Post post) {
         if (posts != null) {
+
+            posts.subList(posts.indexOf(post), posts.size()).forEach( p -> {
+                p.setPostNumber(p.getPostNumber() - 1);
+            });
+
             post.setThread(null);
             boolean removed = posts.remove(post);
             postCount = (long) posts.size();
+
             return removed;
         }
         return false;
