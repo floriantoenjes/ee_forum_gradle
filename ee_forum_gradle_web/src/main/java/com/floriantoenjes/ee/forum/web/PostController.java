@@ -87,7 +87,7 @@ public class PostController implements Serializable {
         threadBean.editThread(thread);
         boardBean.editBoard(thread.getBoard());
 
-        currentPage = (int) Math.ceil((thread.getPosts().size() - 1) / PAGE_SIZE);
+        currentPage = (int) Math.ceil(thread.getPosts().size() / (double) PAGE_SIZE) - 1;
 
         return "pretty:viewThreadPages";
     }
