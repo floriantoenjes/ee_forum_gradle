@@ -126,6 +126,7 @@ public class Thread implements Serializable {
 
         boolean added = this.posts.add(post);
         postCount = (long) posts.size();
+
         return added;
     }
 

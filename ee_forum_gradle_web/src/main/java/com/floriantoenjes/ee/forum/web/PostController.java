@@ -73,11 +73,14 @@ public class PostController implements Serializable {
     public String createPost(User author) {
         Thread thread = threadBean.findWithPosts(threadId);
         thread.addPost(post);
+
         post.setAuthor(author);
         post.setCreated(new Date());
 
-        postBean.createPost(post);
+        thread.clearLastPost();
+
         threadBean.editThread(thread);
+
         currentPage = (int) Math.ceil((thread.getPosts().size() - 1) / PAGE_SIZE);
 
         return "pretty:viewThreadPages";
