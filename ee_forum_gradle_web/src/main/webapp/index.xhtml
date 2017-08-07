@@ -22,16 +22,17 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Threads</f:facet>
-                #{board.threads.size()}
+                #{board.threadCount}
             </h:column>
             <h:column>
                 <f:facet name="header">Last Post</f:facet>
-                <pretty:link mappingId="viewThread">
+                <pretty:link mappingId="viewThreadPages" rendered="#{board.lastThread != null}">
                     <f:param value="#{board.id}"/>
                     <f:param value="#{board.lastThread.id}"/>
+                    <f:param value="#{board.lastThread.pages}"/>
                     #{board.lastThread.name}
                 </pretty:link>
-                by #{board.lastThread.lastPost.author.username} at
+                <h:outputText value=" by #{board.lastThread.lastPost.author.username} at "/>
                 <h:outputText value="#{board.lastThread.updated}">
                     <f:convertDateTime dateStyle="short" type="both"/>
                 </h:outputText>

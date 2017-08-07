@@ -9,13 +9,9 @@ import com.floriantoenjes.ee.forum.ejb.model.Thread;
 import com.floriantoenjes.ee.forum.ejb.model.User;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -69,17 +65,20 @@ public class ThreadController implements Serializable {
 
     public String createThread(User user) {
 
+        Board board = boardBean.findWithTreads(boardId);
+        board.addThread(thread);
+
         thread.setAuthor(user);
-        thread.setBoard(getBoard());
         thread.setCreated(new Date());
 
-        thread = threadBean.createThread(thread);
-
         post.setAuthor(user);
-        post.setThread(thread);
         post.setCreated(new Date());
 
-        postBean.createPost(post);
+        board.clearLastThread();
+
+        thread.addPost(post);
+
+        boardBean.editBoard(board);
 
         return "pretty:viewBoard";
     }
@@ -91,7 +90,10 @@ public class ThreadController implements Serializable {
     }
 
     public String deleteThread() {
-        threadBean.deleteThread(thread);
+        Board board = boardBean.findWithTreads(boardId);
+        board.removeThread(thread);
+
+        boardBean.editBoard(board);
 
         return "pretty:viewBoard";
     }

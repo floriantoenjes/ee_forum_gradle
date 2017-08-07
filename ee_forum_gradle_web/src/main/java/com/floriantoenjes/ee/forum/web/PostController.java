@@ -1,5 +1,6 @@
 package com.floriantoenjes.ee.forum.web;
 
+import com.floriantoenjes.ee.forum.ejb.BoardBean;
 import com.floriantoenjes.ee.forum.ejb.PostBean;
 import com.floriantoenjes.ee.forum.ejb.ThreadBean;
 import com.floriantoenjes.ee.forum.ejb.model.Board;
@@ -43,6 +44,9 @@ public class PostController implements Serializable {
     @EJB
     private ThreadBean threadBean;
 
+    @EJB
+    private BoardBean boardBean;
+
     public String initPost() {
         post = postBean.find(postId);
         if (post == null) {
@@ -72,12 +76,17 @@ public class PostController implements Serializable {
 
     public String createPost(User author) {
         Thread thread = threadBean.findWithPosts(threadId);
+        thread.getBoard().clearLastThread().ifPresent(threadBean::editThread);
+
+        thread.clearLastPost();
         thread.addPost(post);
+
         post.setAuthor(author);
         post.setCreated(new Date());
 
-        postBean.createPost(post);
         threadBean.editThread(thread);
+        boardBean.editBoard(thread.getBoard());
+
         currentPage = (int) Math.ceil((thread.getPosts().size() - 1) / PAGE_SIZE);
 
         return "pretty:viewThreadPages";
@@ -90,7 +99,9 @@ public class PostController implements Serializable {
     }
 
     public String deletePost() {
-        postBean.deletePost(post);
+        Thread thread = threadBean.findWithPosts(post.getThread().getId());
+        thread.removePost(post);
+        threadBean.editThread(thread);
 
         return "pretty:viewThread";
     }

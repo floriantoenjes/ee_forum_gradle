@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(schema = "FORUM", name = "BOARD")
@@ -35,11 +36,14 @@ public class Board {
     @Size(max = 120, message = "has to be less than 120 characters")
     private String description;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Thread> threads;
 
     @OneToOne(mappedBy = "boardOneToOne")
     private Thread lastThread;
+
+    @Column(name = "THREAD_COUNT")
+    private Long threadCount;
 
     // ToDo: Add a way for ordering
 
@@ -58,7 +62,20 @@ public class Board {
             threads = new ArrayList<>();
         }
         thread.setBoard(this);
-        return this.threads.add(thread);
+        boolean added = this.threads.add(thread);
+        threadCount = (long) threads.size();
+        return added;
+
+    }
+
+    public boolean removeThread(Thread thread) {
+        if (threads != null) {
+            thread.setBoard(null);
+            boolean removed = threads.remove(thread);
+            threadCount = (long) threads.size();
+            return removed;
+        }
+        return false;
     }
 
     public Long getId() {
@@ -89,8 +106,41 @@ public class Board {
         return lastThread;
     }
 
+    public Optional<Thread> clearLastThread() {
+        Thread oldLastThread = lastThread;
+        if (oldLastThread != null) {
+            lastThread.setBoardOneToOne(null);
+            lastThread = null;
+            return Optional.of(oldLastThread);
+        }
+        return Optional.empty();
+    }
+
     public void setLastThread(Thread lastThread) {
         this.lastThread = lastThread;
         lastThread.setBoardOneToOne(this);
+    }
+
+    public Long getThreadCount() {
+        return threadCount;
+    }
+
+    public void setThreadCount(Long threadCount) {
+        this.threadCount = threadCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Board board = (Board) o;
+
+        return id != null ? id.equals(board.id) : board.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

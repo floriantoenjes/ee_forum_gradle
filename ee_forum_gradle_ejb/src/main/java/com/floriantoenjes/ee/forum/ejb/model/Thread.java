@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(schema = "FORUM", name = "THREAD")
@@ -45,7 +46,7 @@ public class Thread implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    @OneToMany(mappedBy = "thread", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
 
     @OneToOne(mappedBy = "threadOneToOne")
@@ -57,6 +58,9 @@ public class Thread implements Serializable {
     @OneToOne
     @JoinColumn(name = "BOARD_ONE_TO_ONE_ID")
     private Board boardOneToOne;
+
+    @Column(name = "POST_COUNT")
+    private Long postCount;
 
     public Thread() {}
 
@@ -120,11 +124,31 @@ public class Thread implements Serializable {
 
         board.setLastThread(this);
 
-        return this.posts.add(post);
+        boolean added = this.posts.add(post);
+        postCount = (long) posts.size();
+
+        return added;
+    }
+
+    public boolean removePost(Post post) {
+        if (posts != null) {
+            post.setThread(null);
+            boolean removed = posts.remove(post);
+            postCount = (long) posts.size();
+            return removed;
+        }
+        return false;
     }
 
     public Post getLastPost() {
         return lastPost;
+    }
+
+    public void clearLastPost() {
+        if (lastPost != null) {
+            lastPost.setThreadOneToOne(null);
+            lastPost = null;
+        }
     }
 
     public void setLastPost(Post lastPost) {
@@ -139,8 +163,11 @@ public class Thread implements Serializable {
         this.updated = updated;
     }
 
-    public Long getPages() {
-        return (long) Math.ceil((posts.size() - 1) / PAGE_SIZE );
+    public long getPages() {
+        if (postCount != null && postCount > - 1) {
+            return (long) Math.ceil((postCount - 1) / PAGE_SIZE );
+        }
+        return 0L;
     }
 
     public Board getBoardOneToOne() {
@@ -149,5 +176,28 @@ public class Thread implements Serializable {
 
     public void setBoardOneToOne(Board boardOneToOne) {
         this.boardOneToOne = boardOneToOne;
+    }
+
+    public Long getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(Long postCount) {
+        this.postCount = postCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Thread thread = (Thread) o;
+
+        return id != null ? id.equals(thread.id) : thread.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
