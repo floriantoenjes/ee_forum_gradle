@@ -20,6 +20,7 @@ public class SearchController implements Serializable {
 
     private static final int RESULT_LENGTH = 250;
     private static final String ELLIPSIS = "...";
+    private static final int PAGE_SIZE = 5;
 
     @EJB
     private PostBean postBean;
@@ -45,6 +46,10 @@ public class SearchController implements Serializable {
                 }
             }
         }
+    }
+
+    public int getResultPage(Long postNumber) {
+        return (int) Math.ceil((postNumber - 1) / PAGE_SIZE);
     }
 
     public String getQuery() {
