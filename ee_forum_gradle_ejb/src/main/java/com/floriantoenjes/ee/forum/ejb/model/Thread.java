@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(schema = "FORUM", name = "THREAD")
@@ -140,6 +141,13 @@ public class Thread implements Serializable {
 
     public Post getLastPost() {
         return lastPost;
+    }
+
+    public void clearLastPost() {
+        if (lastPost != null) {
+            lastPost.setThreadOneToOne(null);
+            lastPost = null;
+        }
     }
 
     public void setLastPost(Post lastPost) {

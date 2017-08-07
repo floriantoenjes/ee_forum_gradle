@@ -15,7 +15,6 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Named
 @ViewScoped
@@ -75,8 +74,7 @@ public class ThreadController implements Serializable {
         post.setAuthor(user);
         post.setCreated(new Date());
 
-        Optional<Thread> oldLastThread = board.getAndClearLastThread();
-        oldLastThread.ifPresent(thread -> threadBean.editThread(thread));
+        board.clearLastThread();
 
         thread.addPost(post);
 
