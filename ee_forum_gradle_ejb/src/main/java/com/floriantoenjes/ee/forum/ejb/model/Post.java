@@ -29,7 +29,7 @@ public class Post implements Serializable {
     @Size(min = 5, max = 1000)
     private String text;
 
-    @NotNull
+//    @NotNull
     @ManyToOne
     private Thread thread;
 
@@ -93,5 +93,20 @@ public class Post implements Serializable {
 
     public void setThreadOneToOne(Thread threadOneToOne) {
         this.threadOneToOne = threadOneToOne;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Post post = (Post) o;
+
+        return id != null ? id.equals(post.id) : post.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

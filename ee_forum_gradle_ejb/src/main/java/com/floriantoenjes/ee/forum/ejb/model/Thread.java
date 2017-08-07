@@ -2,7 +2,6 @@ package com.floriantoenjes.ee.forum.ejb.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class Thread implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    @OneToMany(mappedBy = "thread", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
 
     @OneToOne(mappedBy = "threadOneToOne")
@@ -124,9 +123,19 @@ public class Thread implements Serializable {
 
         board.setLastThread(this);
 
-        postCount = postCount == null ? 1 : postCount + 1;
+        boolean added = this.posts.add(post);
+        postCount = (long) posts.size();
+        return added;
+    }
 
-        return this.posts.add(post);
+    public boolean removePost(Post post) {
+        if (posts != null) {
+            post.setThread(null);
+            boolean removed = posts.remove(post);
+            postCount = (long) posts.size();
+            return removed;
+        }
+        return false;
     }
 
     public Post getLastPost() {
@@ -145,8 +154,8 @@ public class Thread implements Serializable {
         this.updated = updated;
     }
 
-    public Long getPages() {
-        if (postCount != null && postCount > 0) {
+    public long getPages() {
+        if (postCount != null && postCount > - 1) {
             return (long) Math.ceil((postCount - 1) / PAGE_SIZE );
         }
         return 0L;
@@ -166,5 +175,20 @@ public class Thread implements Serializable {
 
     public void setPostCount(Long postCount) {
         this.postCount = postCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Thread thread = (Thread) o;
+
+        return id != null ? id.equals(thread.id) : thread.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

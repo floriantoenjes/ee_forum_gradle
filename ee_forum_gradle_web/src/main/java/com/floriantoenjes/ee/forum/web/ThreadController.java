@@ -9,16 +9,13 @@ import com.floriantoenjes.ee.forum.ejb.model.Thread;
 import com.floriantoenjes.ee.forum.ejb.model.User;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Named
 @ViewScoped
@@ -69,20 +66,21 @@ public class ThreadController implements Serializable {
 
     public String createThread(User user) {
 
-        thread.setAuthor(user);
         Board board = boardBean.findWithTreads(boardId);
         board.addThread(thread);
-        boardBean.editBoard(board);
 
+        thread.setAuthor(user);
         thread.setCreated(new Date());
-        thread = threadBean.createThread(thread);
 
         post.setAuthor(user);
         post.setCreated(new Date());
+
+        Optional<Thread> oldLastThread = board.getAndClearLastThread();
+        oldLastThread.ifPresent(thread -> threadBean.editThread(thread));
+
         thread.addPost(post);
 
-        postBean.createPost(post);
-        threadBean.editThread(thread);
+        boardBean.editBoard(board);
 
         return "pretty:viewBoard";
     }
@@ -94,9 +92,9 @@ public class ThreadController implements Serializable {
     }
 
     public String deleteThread() {
-        Board board = thread.getBoard();
-        board.setThreadCount(board.getThreadCount() - 1);
-        threadBean.deleteThread(thread);
+        Board board = boardBean.findWithTreads(boardId);
+        board.removeThread(thread);
+
         boardBean.editBoard(board);
 
         return "pretty:viewBoard";
