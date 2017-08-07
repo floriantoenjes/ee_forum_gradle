@@ -49,7 +49,7 @@ public class SearchController implements Serializable {
     }
 
     public int getResultPage(Long postNumber) {
-        return (int) Math.ceil((postNumber - 1) / PAGE_SIZE);
+        return (int) Math.ceil((postNumber) / (double) PAGE_SIZE) - 1;
     }
 
     public String getQuery() {
