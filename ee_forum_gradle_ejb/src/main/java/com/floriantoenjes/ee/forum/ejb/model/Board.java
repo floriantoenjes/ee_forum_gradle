@@ -128,4 +128,19 @@ public class Board {
     public void setThreadCount(Long threadCount) {
         this.threadCount = threadCount;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Board board = (Board) o;
+
+        return id != null ? id.equals(board.id) : board.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }
