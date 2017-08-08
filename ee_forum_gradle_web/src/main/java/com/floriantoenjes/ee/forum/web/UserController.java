@@ -24,8 +24,12 @@ public class UserController {
         users = userBean.findAll();
     }
 
-    public void loadUser() {
+    public String loadUser() {
         user = userBean.find(userId);
+        if (user == null) {
+            return "pretty:not-found";
+        }
+        return null;
     }
 
     public List<User> getUsers() {

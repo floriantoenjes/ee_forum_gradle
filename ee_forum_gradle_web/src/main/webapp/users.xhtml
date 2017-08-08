@@ -5,7 +5,10 @@
     <ui:define name="content">
         <h:dataTable value="#{userController.users}" var="user">
             <h:column>
-                <h:outputText value="#{user.username}"/>
+                <pretty:link mappingId="viewUser">
+                    <f:param value="#{user.id}"/>
+                    #{user.username}
+                </pretty:link>
             </h:column>
         </h:dataTable>
     </ui:define>
