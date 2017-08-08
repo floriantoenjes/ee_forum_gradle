@@ -3,6 +3,7 @@ package com.floriantoenjes.ee.forum.ejb.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,7 +34,8 @@ public class User implements Serializable {
 
     @NotNull(message = "is required")
     @Size(min = 3, max = 40, message = "has to be between 3 and 40 characters")
-//    @Email(message = "has to be a valid email address")
+    @Pattern(regexp = "[a-zA-Z0-9-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+",
+            message = "has to be a valid email address")
     private String email;
 
     @NotNull(message = "is required")
