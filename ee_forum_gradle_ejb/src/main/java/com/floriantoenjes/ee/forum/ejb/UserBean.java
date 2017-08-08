@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.util.List;
 import java.util.Optional;
 
 @Stateless
@@ -39,6 +40,10 @@ public class UserBean {
         query.setParameter("username", username);
         query.setParameter("password", password);
         return query.getResultList().stream().findFirst();
+    }
+
+    public List<User> findAll() {
+        return em.createNamedQuery("User.findAll", User.class).getResultList();
     }
 
     public Optional<byte[]> getAvatar(Long userId) {

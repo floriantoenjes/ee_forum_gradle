@@ -91,6 +91,11 @@
         <action>#{postController.initPost}</action>
     </url-mapping>
 
+    <url-mapping id="viewUsers">
+        <pattern value="/users/"/>
+        <view-id value="/users.xhtml"/>
+        <action>#{userController.loadUsers}</action>
+    </url-mapping>
 
     <url-mapping id="not-found">
         <pattern value="/not-found/"/>
