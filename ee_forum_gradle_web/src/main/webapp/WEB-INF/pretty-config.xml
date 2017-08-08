@@ -91,10 +91,15 @@
         <action>#{postController.initPost}</action>
     </url-mapping>
 
-    <url-mapping id="viewUsers">
+    <url-mapping id="viewUserList">
         <pattern value="/users/"/>
         <view-id value="/users.xhtml"/>
         <action>#{userController.loadUsers}</action>
+    </url-mapping>
+
+    <url-mapping id="viewUser">
+        <pattern value="/users/#{userController.userId}/"/>
+        <view-id value="/user_detail.xhtml"/>
     </url-mapping>
 
     <url-mapping id="not-found">
