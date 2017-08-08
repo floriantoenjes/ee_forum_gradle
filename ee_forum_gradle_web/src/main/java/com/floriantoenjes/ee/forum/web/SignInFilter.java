@@ -82,13 +82,13 @@ public class SignInFilter implements Filter {
                 sendForbidden(httpServletRequest, httpServletResponse);
             }
 
-        /* Check if user is author of the post */
+        /* Check if user is author of the post or post is marked as deleted */
         } else if (postMatcher.find()) {
 
             Long postId = Long.parseLong(postMatcher.group(1));
             Post post = postBean.find(postId);
 
-            if (user == null || !signInController.getUser().equals(post.getAuthor())) {
+            if (user == null || !signInController.getUser().equals(post.getAuthor()) || post.getDeleted()) {
                 sendForbidden(httpServletRequest, httpServletResponse);
             }
         }
