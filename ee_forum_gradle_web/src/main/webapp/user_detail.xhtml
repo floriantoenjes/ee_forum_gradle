@@ -3,6 +3,9 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pretty="http://ocpsoft.com/prettyfaces">
     <ui:define name="content">
+        <h:graphicImage url="/avatar?userId=#{userController.user.id}" rendered="#{userController.user.avatar != null}"/>
+        <br/>
+        <br/>
         <h:outputText value="Username: #{userController.user.username}"/>
     </ui:define>
 </ui:composition>
