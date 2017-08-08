@@ -12,7 +12,7 @@ import java.util.List;
 @Table(schema = "FORUM", name = "USR")
 @NamedQuery(
         name = "User.findAll",
-        query = "SELECT u FROM User u"
+        query = "SELECT u FROM User u ORDER BY u.username ASC"
 )
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;

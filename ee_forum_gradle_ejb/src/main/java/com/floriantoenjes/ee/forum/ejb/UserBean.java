@@ -34,7 +34,7 @@ public class UserBean {
         return user;
     }
 
-    public Optional<User> find(String username, String password) {
+    public Optional<User> findByCredentials(String username, String password) {
         TypedQuery<User> query = em.createQuery(
                 "SELECT u FROM User u WHERE u.username = :username AND u.password = :password", User.class);
         query.setParameter("username", username);
@@ -44,6 +44,10 @@ public class UserBean {
 
     public List<User> findAll() {
         return em.createNamedQuery("User.findAll", User.class).getResultList();
+    }
+
+    public User find(Long id) {
+        return em.find(User.class, id);
     }
 
     public Optional<byte[]> getAvatar(Long userId) {

@@ -100,7 +100,9 @@
     <url-mapping id="viewUser">
         <pattern value="/users/#{userController.userId}/"/>
         <view-id value="/user_detail.xhtml"/>
+        <action>#{userController.loadUser}</action>
     </url-mapping>
+
 
     <url-mapping id="not-found">
         <pattern value="/not-found/"/>
