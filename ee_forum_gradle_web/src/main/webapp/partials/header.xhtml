@@ -10,10 +10,10 @@
     <ul class="navbar">
         <li><h:link value="Home" outcome="pretty:home"/></li>
         <ui:fragment rendered="#{signInController.user == null}">
-            <li><h:link value="Sign in" outcome="signin.xhtml"/></li>
+            <li><h:link value="Sign in" outcome="pretty:signIn"/></li>
         </ui:fragment>
         <ui:fragment rendered="#{signInController.user == null}">
-            <li><h:link value="Register" outcome="register.xhtml"/></li>
+            <li><h:link value="Register" outcome="pretty:register"/></li>
         </ui:fragment>
         <li>
             <h:form rendered="#{signInController.user != null}">
@@ -23,7 +23,7 @@
         <ui:fragment rendered="#{signInController.user != null}">
             <li><h:link value="Control Center" outcome="pretty:controlCenter"/></li>
         </ui:fragment>
-        <li><h:link value="Search" outcome="/search.xhtml"/></li>
+        <li><h:link value="Search" outcome="pretty:search"/></li>
         <li><h:link value="Users" outcome="pretty:viewUserList"/></li>
     </ul>
 </f:view>
