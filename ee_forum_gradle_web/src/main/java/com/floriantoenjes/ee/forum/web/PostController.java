@@ -99,15 +99,15 @@ public class PostController implements Serializable {
     }
 
     public String deletePost() {
-//        Thread thread = threadBean.findWithPosts(post.getThread().getId());
-//        thread.removePost(post);
-//        threadBean.editThread(thread);
 
         post.setDeleted(true);
         post.setText("This post has been deleted.");
         postBean.editPost(post);
 
-        return "pretty:viewThread";
+        thread = threadBean.findWithPosts(post.getThread().getId());
+        currentPage = (int) Math.ceil(thread.getPosts().size() / (double) PAGE_SIZE) - 1;
+
+        return "pretty:viewThreadPages";
     }
 
     public Long getBoardId() {
@@ -181,4 +181,5 @@ public class PostController implements Serializable {
     public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
     }
+
 }
