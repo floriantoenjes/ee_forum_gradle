@@ -104,8 +104,7 @@ public class PostController implements Serializable {
         post.setText("This post has been deleted.");
         postBean.editPost(post);
 
-        thread = threadBean.findWithPosts(post.getThread().getId());
-        currentPage = (int) Math.ceil(thread.getPosts().size() / (double) PAGE_SIZE) - 1;
+        currentPage = (int) Math.ceil(post.getPostNumber() / (double) PAGE_SIZE) - 1;
 
         return "pretty:viewThreadPages";
     }
