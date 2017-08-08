@@ -48,6 +48,8 @@ public class Post implements Serializable {
     @Column(name = "POST_NUMBER")
     private Long postNumber;
 
+    private Boolean deleted;
+
     public Post() {}
 
     public Long getId() {
@@ -104,6 +106,14 @@ public class Post implements Serializable {
 
     public void setPostNumber(Long postNumber) {
         this.postNumber = postNumber;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override
