@@ -103,6 +103,11 @@
         <action>#{userController.loadUser}</action>
     </url-mapping>
 
+    <url-mapping id="sendMessage">
+        <pattern value="/users/#{userController.userId}/message/"/>
+        <view-id value="/message_form.xhtml"/>
+    </url-mapping>
+
 
     <url-mapping id="not-found">
         <pattern value="/not-found/"/>

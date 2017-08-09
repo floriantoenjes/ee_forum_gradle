@@ -7,5 +7,9 @@
         <br/>
         <br/>
         <h:outputText value="Username: #{userController.user.username}"/>
+        <pretty:link mappingId="sendMessage">
+            <f:param value="#{userController.userId}"/>
+            Send a message
+        </pretty:link>
     </ui:define>
 </ui:composition>
