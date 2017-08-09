@@ -4,6 +4,8 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pretty="http://ocpsoft.com/prettyfaces">
     <ui:define name="content">
         <h:form>
+            <h:outputLabel value="Subject:" for="message-subject"/>
+            <h:inputText id="message-subject"/>
             <h:outputLabel value="Message:" for="message-text"/>
             <h:inputTextarea id="message-text"/>
             <h:commandButton value="Send"/>
