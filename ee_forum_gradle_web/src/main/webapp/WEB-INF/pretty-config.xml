@@ -103,6 +103,12 @@
         <action>#{userController.loadUser}</action>
     </url-mapping>
 
+    <url-mapping id="viewMessages">
+        <pattern value="/messages/"/>
+        <view-id value="/messages.xhtml"/>
+        <action>#{userController.loadMessages}</action>
+    </url-mapping>
+
     <url-mapping id="sendMessage">
         <pattern value="/users/#{userController.userId}/message/"/>
         <view-id value="/message_form.xhtml"/>

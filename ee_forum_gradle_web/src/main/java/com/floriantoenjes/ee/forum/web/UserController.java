@@ -15,6 +15,7 @@ import java.util.List;
 @Named
 @RequestScoped
 public class UserController {
+    private List<Message> messages;
     private List<User> users;
 
     private User user;
@@ -43,6 +44,10 @@ public class UserController {
             return "pretty:not-found";
         }
         return null;
+    }
+
+    public void loadMessages() {
+        messages = messageBean.findAllByReceiver(signInController.getUser().getId());
     }
 
     public String sendMessage() {
@@ -85,5 +90,13 @@ public class UserController {
 
     public void setMessage(Message message) {
         this.message = message;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 }
