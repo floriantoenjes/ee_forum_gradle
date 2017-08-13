@@ -2,6 +2,7 @@ package com.floriantoenjes.ee.forum.ejb.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -36,9 +37,11 @@ public class Message implements Serializable {
     private User receiver;
 
     @NotNull
+    @Size(min = 3, max = 40)
     private String subject;
 
     @NotNull
+    @Size(min = 3, max = 1000)
     private String text;
 
     public Message() {
