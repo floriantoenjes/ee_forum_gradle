@@ -30,7 +30,7 @@ public class BoardBean {
 
     @SuppressWarnings("unchecked")
     public List<Board> findAll() {
-        TypedQuery<Board> query = em.createQuery("SELECT b FROM Board b", Board.class);
+        TypedQuery<Board> query = em.createNamedQuery("Board.findAll", Board.class);
         return query.getResultList();
     }
 
