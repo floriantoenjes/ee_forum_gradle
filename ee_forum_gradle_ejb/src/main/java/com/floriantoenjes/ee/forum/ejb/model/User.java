@@ -60,6 +60,12 @@ public class User implements Serializable {
     )
     private List<Role> roles;
 
+    @OneToMany(mappedBy = "sender")
+    private List<Message> messagesSent;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<Message> messagesReceived;
+
     public User() {}
 
     public Long getId() {
@@ -127,6 +133,22 @@ public class User implements Serializable {
 
     public void setSignature(String signature) {
         this.signature = signature;
+    }
+
+    public List<Message> getMessagesSent() {
+        return messagesSent;
+    }
+
+    public void setMessagesSent(List<Message> messagesSent) {
+        this.messagesSent = messagesSent;
+    }
+
+    public List<Message> getMessagesReceived() {
+        return messagesReceived;
+    }
+
+    public void setMessagesReceived(List<Message> messagesReceived) {
+        this.messagesReceived = messagesReceived;
     }
 
     @Override

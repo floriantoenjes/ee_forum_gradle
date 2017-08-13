@@ -1,6 +1,5 @@
 package com.floriantoenjes.ee.forum.ejb.model;
 
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
