@@ -7,6 +7,8 @@ import com.floriantoenjes.ee.forum.ejb.model.User;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Date;
@@ -56,6 +58,8 @@ public class UserController {
         message.setCreated(new Date());
 
         messageBean.createMessage(message);
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Message sent"));
 
         return "pretty:viewUser";
     }
