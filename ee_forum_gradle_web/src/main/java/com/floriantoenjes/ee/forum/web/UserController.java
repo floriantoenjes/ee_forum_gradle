@@ -1,11 +1,15 @@
 package com.floriantoenjes.ee.forum.web;
 
+import com.floriantoenjes.ee.forum.ejb.MessageBean;
 import com.floriantoenjes.ee.forum.ejb.UserBean;
+import com.floriantoenjes.ee.forum.ejb.model.Message;
 import com.floriantoenjes.ee.forum.ejb.model.User;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Date;
 import java.util.List;
 
 @Named
@@ -16,6 +20,15 @@ public class UserController {
     private User user;
 
     private Long userId;
+
+    @Inject
+    private Message message;
+
+    @Inject
+    private SignInController signInController;
+
+    @EJB
+    private MessageBean messageBean;
 
     @EJB
     private UserBean userBean;
@@ -30,6 +43,16 @@ public class UserController {
             return "pretty:not-found";
         }
         return null;
+    }
+
+    public String sendMessage() {
+        message.setSender(signInController.getUser());
+        message.setReceiver(userBean.find(userId));
+        message.setCreated(new Date());
+
+        messageBean.createMessage(message);
+
+        return "pretty:viewUser";
     }
 
     public List<User> getUsers() {
@@ -54,5 +77,13 @@ public class UserController {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Message getMessage() {
+        return message;
+    }
+
+    public void setMessage(Message message) {
+        this.message = message;
     }
 }

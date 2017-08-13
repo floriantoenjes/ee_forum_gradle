@@ -5,10 +5,10 @@
     <ui:define name="content">
         <h:form>
             <h:outputLabel value="Subject:" for="message-subject"/>
-            <h:inputText id="message-subject"/>
+            <h:inputText id="message-subject" value="#{userController.message.subject}"/>
             <h:outputLabel value="Message:" for="message-text"/>
-            <h:inputTextarea id="message-text"/>
-            <h:commandButton value="Send"/>
+            <h:inputTextarea id="message-text" value="#{userController.message.text}"/>
+            <h:commandButton action="#{userController.sendMessage}" value="Send"/>
         </h:form>
     </ui:define>
 </ui:composition>

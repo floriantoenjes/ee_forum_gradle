@@ -3,6 +3,7 @@ package com.floriantoenjes.ee.forum.ejb.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(schema = "FORUM", name = "MESSAGE")
@@ -21,6 +22,10 @@ public class Message implements Serializable {
             generator = "MESSAGE_ID_GENERATOR"
     )
     private Long id;
+
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
 
     @NotNull
     @ManyToOne
@@ -78,5 +83,13 @@ public class Message implements Serializable {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
 }
