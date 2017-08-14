@@ -3,8 +3,10 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pretty="http://ocpsoft.com/prettyfaces">
     <ui:define name="content">
-        <h:dataTable value="#{userController.users}" var="user">
+        <h:dataTable styleClass="table post-table" value="#{userController.users}" var="user"
+                     rowClasses="table-even-row, table-odd-row" headerClass="table-header">
             <h:column>
+                <f:facet name="header">Username</f:facet>
                 <pretty:link mappingId="viewUser">
                     <f:param value="#{user.id}"/>
                     #{user.username}
