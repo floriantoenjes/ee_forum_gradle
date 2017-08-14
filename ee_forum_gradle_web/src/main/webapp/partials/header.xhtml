@@ -20,11 +20,12 @@
                 <h:commandLink value="Sign out" action="#{signInController.logout}"/>
             </h:form>
         </li>
+        <li><h:link value="Search" outcome="pretty:search"/></li>
+        <li><h:link value="Users" outcome="pretty:viewUserList"/></li>
+        <li><h:link value="Messages" outcome="pretty:viewMessages"/></li>
         <ui:fragment rendered="#{signInController.user != null}">
             <li><h:link value="Control Center" outcome="pretty:controlCenter"/></li>
         </ui:fragment>
-        <li><h:link value="Search" outcome="pretty:search"/></li>
-        <li><h:link value="Users" outcome="pretty:viewUserList"/></li>
     </ul>
 </f:view>
 </html>

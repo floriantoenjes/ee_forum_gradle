@@ -11,7 +11,8 @@
             <h3><h:outputLabel value="#{threadController.board.name}"/></h3>
         </div>
 
-        <h:dataTable styleClass="table post-table" value="#{threadController.threads}" var="thread" rowClasses="table-even-row, table-odd-row" headerClass="table-header">
+        <h:dataTable styleClass="table post-table" value="#{threadController.threads}" var="thread"
+                     rowClasses="table-even-row, table-odd-row" headerClass="table-header">
             <f:facet name="header">Threads</f:facet>
             <h:column>
                 <f:facet name="header">Thread</f:facet>

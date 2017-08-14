@@ -104,8 +104,8 @@
     </url-mapping>
 
     <url-mapping id="viewMessages">
-        <pattern value="/messages/"/>
-        <view-id value="/messages.xhtml"/>
+        <pattern value="/message/"/>
+        <view-id value="/message.xhtml"/>
         <action>#{userController.loadMessages}</action>
     </url-mapping>
 
