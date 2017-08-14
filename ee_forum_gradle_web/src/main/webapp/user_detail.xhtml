@@ -5,8 +5,8 @@
     <ui:define name="content">
         <h:graphicImage url="/avatar?userId=#{userController.user.id}" rendered="#{userController.user.avatar != null}"/>
         <br/>
-        <br/>
         <h:outputText value="Username: #{userController.user.username}"/>
+        <br/>
         <pretty:link mappingId="sendMessage" rendered="#{userController.userId != signInController.user.id}">
             <f:param value="#{userController.userId}"/>
             Send a message
