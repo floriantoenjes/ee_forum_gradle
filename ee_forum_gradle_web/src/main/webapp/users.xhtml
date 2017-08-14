@@ -6,6 +6,11 @@
         <h:dataTable styleClass="table post-table" value="#{userController.users}" var="user"
                      rowClasses="table-even-row, table-odd-row" headerClass="table-header">
             <h:column>
+                <f:facet name="header">Avatar</f:facet>
+                <h:graphicImage url="/avatar?userId=#{user.id}" rendered="#{user.avatar != null}"/>
+                <h:graphicImage library="img" name="user.png" rendered="#{user.avatar == null}"/>
+            </h:column>
+            <h:column>
                 <f:facet name="header">Username</f:facet>
                 <pretty:link mappingId="viewUser">
                     <f:param value="#{user.id}"/>
