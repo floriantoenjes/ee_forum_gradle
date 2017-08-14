@@ -65,7 +65,7 @@ public class SignInFilter implements Filter {
 
             servletRequest.getRequestDispatcher("/").forward(servletRequest, servletResponse);
 
-        /* Restrict thread and post creation and control center to signed in users */
+        /* Restrict views to signed in users */
         } else if ((path.startsWith("/thread_form") ||
                 path.startsWith("/post_form") ||
                 path.startsWith("/control-center")) ||
