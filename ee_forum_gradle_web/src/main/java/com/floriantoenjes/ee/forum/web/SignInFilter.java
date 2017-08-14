@@ -66,10 +66,12 @@ public class SignInFilter implements Filter {
             servletRequest.getRequestDispatcher("/").forward(servletRequest, servletResponse);
 
         /* Restrict views to signed in users */
-        } else if ((path.startsWith("/thread_form") ||
+        } else if ((
+                path.startsWith("/thread_form") ||
                 path.startsWith("/post_form") ||
                 path.startsWith("/control-center") ||
-                path.startsWith("/message")) && user == null) {
+                path.startsWith("/message")
+        ) && user == null) {
 
             sendUnauthorized(httpServletRequest, httpServletResponse);
 
