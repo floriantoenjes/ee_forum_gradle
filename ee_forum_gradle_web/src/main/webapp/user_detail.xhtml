@@ -7,7 +7,7 @@
         <br/>
         <br/>
         <h:outputText value="Username: #{userController.user.username}"/>
-        <pretty:link mappingId="sendMessage">
+        <pretty:link mappingId="sendMessage" rendered="#{userController.userId != signInController.user.id}">
             <f:param value="#{userController.userId}"/>
             Send a message
         </pretty:link>
