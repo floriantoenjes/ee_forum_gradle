@@ -68,7 +68,8 @@ public class SignInFilter implements Filter {
         /* Restrict thread and post creation and control center to signed in users */
         } else if ((path.startsWith("/thread_form") ||
                 path.startsWith("/post_form") ||
-                path.startsWith("/control-center")) && user == null) {
+                path.startsWith("/control-center")) ||
+                path.startsWith("/message") && user == null) {
 
             sendUnauthorized(httpServletRequest, httpServletResponse);
 
