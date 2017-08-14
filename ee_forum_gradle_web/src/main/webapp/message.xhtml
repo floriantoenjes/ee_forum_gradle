@@ -3,7 +3,9 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pretty="http://ocpsoft.com/prettyfaces">
     <ui:define name="content">
-        <h2>Private Messages</h2>
+        <div class="wrapper">
+            <h2>Private Messages</h2>
+        </div>
         <h:dataTable styleClass="table post-table" value="#{userController.messages}" var="message"
                      rowClasses="table-even-row, table-odd-row" headerClass="table-header">
             <h:column>
