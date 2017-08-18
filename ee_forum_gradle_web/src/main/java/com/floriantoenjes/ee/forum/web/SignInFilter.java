@@ -91,7 +91,9 @@ public class SignInFilter implements Filter {
             Long postId = Long.parseLong(postMatcher.group(1));
             Post post = postBean.find(postId);
 
-            if (user == null || !signInController.getUser().equals(post.getAuthor()) || post.getDeleted()) {
+            if (user == null
+                    || !signInController.getUser().equals(post.getAuthor())
+                    || post.getDeleted()) {
                 sendForbidden(httpServletRequest, httpServletResponse);
             }
         }

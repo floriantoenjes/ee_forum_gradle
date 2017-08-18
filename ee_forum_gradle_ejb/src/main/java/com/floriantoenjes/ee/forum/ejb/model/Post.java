@@ -45,10 +45,12 @@ public class Post implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
+    @NotNull
     @Column(name = "POST_NUMBER")
     private Long postNumber;
 
-    private Boolean deleted;
+    @NotNull
+    private Boolean deleted = false;
 
     public Post() {}
 
