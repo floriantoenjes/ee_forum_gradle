@@ -12,7 +12,7 @@
         </div>
 
         <h:dataTable styleClass="table post-table" value="#{threadController.threads}" var="thread"
-                     rowClasses="table-even-row, table-odd-row" headerClass="table-header">
+                     rowClasses="table-even-row, table-odd-row" headerClass="table-header" rows="5">
             <f:facet name="header">Threads</f:facet>
             <h:column>
                 <f:facet name="header">Thread</f:facet>
@@ -50,6 +50,18 @@
             </h:column>
         </h:dataTable>
         <div class="wrapper">
+            <p>Page
+                <ui:repeat value="#{threadController.pages}" var="page">
+                    <pretty:link mappingId="viewBoardPages" rendered="#{page != threadController.currentPage}">
+                        <f:param value="#{threadController.boardId}"/>
+                        <f:param value="#{page}"/>
+                        #{page + 1}
+                    </pretty:link>
+                    <ui:fragment rendered="#{page == threadController.currentPage}">
+                        #{page + 1}
+                    </ui:fragment>
+                </ui:repeat>
+            </p>
             <pretty:link mappingId="addThread" rendered="#{signInController.user != null}" styleClass="center">
                 <f:param value="#{threadController.boardId}"/>
                 New thread

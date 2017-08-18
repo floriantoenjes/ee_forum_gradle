@@ -25,12 +25,12 @@ public class PostBean {
         return em.find(Post.class, id);
     }
 
-    public List<Post> findByThreadId(Long threadId, int currentPage, int page_size) {
+    public List<Post> findByThreadId(Long threadId, int currentPage, int pageSize) {
         TypedQuery<Post> query = em.createQuery("SELECT p FROM Post p WHERE p.thread.id = :threadId " +
                 "ORDER BY p.created ASC ", Post.class);
         query.setParameter("threadId", threadId);
-        query.setFirstResult(currentPage * page_size);
-        query.setMaxResults(page_size);
+        query.setFirstResult(currentPage * pageSize);
+        query.setMaxResults(pageSize);
 
         return query.getResultList();
     }

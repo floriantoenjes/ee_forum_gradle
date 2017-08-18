@@ -13,13 +13,16 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Named
 @ViewScoped
 public class ThreadController implements Serializable {
     private static final long serialVersionUID = 1L;
+    private static final int PAGE_SIZE = 5;
 
     private Long threadId;
 
@@ -28,6 +31,9 @@ public class ThreadController implements Serializable {
     private Board board;
 
     private List<Thread> threads;
+
+    private int currentPage;
+    private List<Integer> pages = new ArrayList<>();
 
     @Inject
     private Post post;
@@ -58,7 +64,15 @@ public class ThreadController implements Serializable {
         if (board == null) {
             return "pretty:not-found";
         }
-        threads = threadBean.findByBoardId(boardId);
+        threads = threadBean.findByBoardId(boardId, currentPage, PAGE_SIZE);
+        long totalThreads = threadBean.getTotalThreadsByBoardId(boardId);
+
+        if (currentPage * PAGE_SIZE > totalThreads) {
+            return "pretty:not-found";
+        }
+
+        pages.clear();
+        IntStream.range(0, (int) Math.ceil(totalThreads / (double) PAGE_SIZE)).forEach(pages::add);
 
         return null;
     }
@@ -148,5 +162,21 @@ public class ThreadController implements Serializable {
 
     public void setThreadId(Long threadId) {
         this.threadId = threadId;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public List<Integer> getPages() {
+        return pages;
+    }
+
+    public void setPages(List<Integer> pages) {
+        this.pages = pages;
     }
 }

@@ -30,10 +30,12 @@ public class ThreadBean {
         return query.getSingleResult();
     }
 
-    public List<Thread> findByBoardId(Long boardId) {
+    public List<Thread> findByBoardId(Long boardId, int currentPage, int pageSize) {
         TypedQuery<Thread> query = em.createQuery("SELECT t FROM Thread t WHERE t.board.id = :boardId " +
                 "ORDER BY t.updated DESC", Thread.class);
         query.setParameter("boardId", boardId);
+        query.setFirstResult(currentPage * pageSize);
+        query.setMaxResults(pageSize);
 
         return query.getResultList();
     }
@@ -49,5 +51,11 @@ public class ThreadBean {
 
     public void deleteThread(Thread thread) {
         em.remove(em.merge(thread));
+    }
+
+    public long getTotalThreadsByBoardId(Long boardId) {
+        Query queryTotal = em.createQuery("SELECT COUNT(t.id) FROM Thread t WHERE t.board.id = :boardId ");
+        queryTotal.setParameter("boardId", boardId);
+        return (long) queryTotal.getSingleResult();
     }
 }

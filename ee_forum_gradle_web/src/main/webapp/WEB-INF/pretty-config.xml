@@ -50,6 +50,12 @@
         <action>#{threadController.loadThreads}</action>
     </url-mapping>
 
+    <url-mapping id="viewBoardPages" parentId="viewBoard">
+        <pattern value="page/#{threadController.currentPage}"/>
+        <view-id value="/board.xhtml"/>
+        <action>#{threadController.loadThreads}</action>
+    </url-mapping>
+
     <url-mapping id="addBoard">
         <pattern value="/add_board/"/>
         <view-id value="/board_form.xhtml"/>

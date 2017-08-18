@@ -53,7 +53,7 @@
             </h:column>
         </h:dataTable>
         <div class="wrapper">
-            <h:form> Page
+            <p>Page
                 <ui:repeat value="#{postController.pages}" var="page">
                     <pretty:link mappingId="viewThreadPages" rendered="#{page != postController.currentPage}">
                         <f:param value="#{postController.boardId}"/>
@@ -65,7 +65,7 @@
                         #{page + 1}
                     </ui:fragment>
                 </ui:repeat>
-            </h:form>
+            </p>
             <pretty:link mappingId="addPost" rendered="#{signInController.user != null}">
                 <f:param value="#{postController.boardId}"/>
                 <f:param value="#{postController.threadId}"/>
