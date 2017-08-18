@@ -25,6 +25,10 @@ public class MessageBean {
         return message;
     }
 
+    public Message find(Long messageId) {
+        return em.find(Message.class, messageId);
+    }
+
     public List<Message> findAllByReceiver(Long receiverId) {
         TypedQuery<Message> query = em.createQuery(
                 "SELECT m FROM Message m WHERE m.receiver.id = :id", Message.class
