@@ -10,7 +10,10 @@
                      rowClasses="table-even-row, table-odd-row" headerClass="table-header">
             <h:column>
                 <f:facet name="header">Subject</f:facet>
-                #{message.subject}
+                <pretty:link mappingId="viewMessage">
+                    <f:param value="#{message.id}"/>
+                    #{message.subject}
+                </pretty:link>
             </h:column>
             <h:column>
                 <f:facet name="header">From</f:facet>
