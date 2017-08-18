@@ -91,6 +91,29 @@
         <action>#{postController.initPost}</action>
     </url-mapping>
 
+    <url-mapping id="viewUserList">
+        <pattern value="/users/"/>
+        <view-id value="/users.xhtml"/>
+        <action>#{userController.loadUsers}</action>
+    </url-mapping>
+
+    <url-mapping id="viewUser">
+        <pattern value="/users/#{userController.userId}/"/>
+        <view-id value="/user_detail.xhtml"/>
+        <action>#{userController.loadUser}</action>
+    </url-mapping>
+
+    <url-mapping id="viewMessages">
+        <pattern value="/message/"/>
+        <view-id value="/message.xhtml"/>
+        <action>#{userController.loadMessages}</action>
+    </url-mapping>
+
+    <url-mapping id="sendMessage">
+        <pattern value="/users/#{userController.userId}/message/"/>
+        <view-id value="/message_form.xhtml"/>
+    </url-mapping>
+
 
     <url-mapping id="not-found">
         <pattern value="/not-found/"/>

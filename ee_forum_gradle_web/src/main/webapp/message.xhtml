@@ -1,0 +1,30 @@
+<ui:composition template="template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pretty="http://ocpsoft.com/prettyfaces">
+    <ui:define name="content">
+        <div class="wrapper">
+            <h2>Private Messages</h2>
+        </div>
+        <h:dataTable styleClass="table post-table" value="#{userController.messages}" var="message"
+                     rowClasses="table-even-row, table-odd-row" headerClass="table-header">
+            <h:column>
+                <f:facet name="header">Subject</f:facet>
+                #{message.subject}
+            </h:column>
+            <h:column>
+                <f:facet name="header">From</f:facet>
+                <pretty:link mappingId="viewUser">
+                    <f:param value="#{message.sender.id}"/>
+                    #{message.sender.username}
+                </pretty:link>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Received at</f:facet>
+                <h:outputText value="#{message.created}">
+                    <f:convertDateTime dateStyle="short" type="both"/>
+                </h:outputText>
+            </h:column>
+        </h:dataTable>
+    </ui:define>
+</ui:composition>

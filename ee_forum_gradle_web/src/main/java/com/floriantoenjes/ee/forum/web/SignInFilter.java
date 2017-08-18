@@ -65,10 +65,13 @@ public class SignInFilter implements Filter {
 
             servletRequest.getRequestDispatcher("/").forward(servletRequest, servletResponse);
 
-        /* Restrict thread and post creation and control center to signed in users */
-        } else if ((path.startsWith("/thread_form") ||
+        /* Restrict views to signed in users */
+        } else if ((
+                path.startsWith("/thread_form") ||
                 path.startsWith("/post_form") ||
-                path.startsWith("/control-center")) && user == null) {
+                path.startsWith("/control-center") ||
+                path.startsWith("/message")
+        ) && user == null) {
 
             sendUnauthorized(httpServletRequest, httpServletResponse);
 
@@ -82,13 +85,13 @@ public class SignInFilter implements Filter {
                 sendForbidden(httpServletRequest, httpServletResponse);
             }
 
-        /* Check if user is author of the post */
+        /* Check if user is author of the post or post is marked as deleted */
         } else if (postMatcher.find()) {
 
             Long postId = Long.parseLong(postMatcher.group(1));
             Post post = postBean.find(postId);
 
-            if (user == null || !signInController.getUser().equals(post.getAuthor())) {
+            if (user == null || !signInController.getUser().equals(post.getAuthor()) || post.getDeleted()) {
                 sendForbidden(httpServletRequest, httpServletResponse);
             }
         }

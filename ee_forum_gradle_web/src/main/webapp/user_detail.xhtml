@@ -1,0 +1,15 @@
+<ui:composition template="template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pretty="http://ocpsoft.com/prettyfaces">
+    <ui:define name="content">
+        <h:graphicImage url="/avatar?userId=#{userController.user.id}" rendered="#{userController.user.avatar != null}"/>
+        <br/>
+        <h:outputText value="Username: #{userController.user.username}"/>
+        <br/>
+        <pretty:link mappingId="sendMessage" rendered="#{userController.userId != signInController.user.id}">
+            <f:param value="#{userController.userId}"/>
+            Send a message
+        </pretty:link>
+    </ui:define>
+</ui:composition>

@@ -3,6 +3,7 @@ package com.floriantoenjes.ee.forum.ejb.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,6 +11,10 @@ import java.util.List;
 
 @Entity
 @Table(schema = "FORUM", name = "USR")
+@NamedQuery(
+        name = "User.findAll",
+        query = "SELECT u FROM User u ORDER BY u.username ASC"
+)
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -29,7 +34,8 @@ public class User implements Serializable {
 
     @NotNull(message = "is required")
     @Size(min = 3, max = 40, message = "has to be between 3 and 40 characters")
-//    @Email(message = "has to be a valid email address")
+    @Pattern(regexp = "[a-zA-Z0-9-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+",
+            message = "has to be a valid email address")
     private String email;
 
     @NotNull(message = "is required")
@@ -53,6 +59,12 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")
     )
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "sender")
+    private List<Message> messagesSent;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<Message> messagesReceived;
 
     public User() {}
 
@@ -121,6 +133,22 @@ public class User implements Serializable {
 
     public void setSignature(String signature) {
         this.signature = signature;
+    }
+
+    public List<Message> getMessagesSent() {
+        return messagesSent;
+    }
+
+    public void setMessagesSent(List<Message> messagesSent) {
+        this.messagesSent = messagesSent;
+    }
+
+    public List<Message> getMessagesReceived() {
+        return messagesReceived;
+    }
+
+    public void setMessagesReceived(List<Message> messagesReceived) {
+        this.messagesReceived = messagesReceived;
     }
 
     @Override

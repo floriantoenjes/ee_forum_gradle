@@ -71,3 +71,9 @@ body {
 .found-column {
     width: 50%;
 }
+
+.messages {
+    list-style-type: none;
+    padding: 1em;
+    background-color: #D4EDDA;
+}
