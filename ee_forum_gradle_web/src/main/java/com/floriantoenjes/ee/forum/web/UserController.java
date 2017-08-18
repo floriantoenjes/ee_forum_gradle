@@ -24,6 +24,8 @@ public class UserController {
 
     private Long userId;
 
+    private Long messageId;
+
     @Inject
     private Message message;
 
@@ -50,6 +52,10 @@ public class UserController {
 
     public void loadMessages() {
         messages = messageBean.findAllByReceiver(signInController.getUser().getId());
+    }
+
+    public void loadMessage() {
+        message = messageBean.find(messageId);
     }
 
     public String sendMessage() {
@@ -102,5 +108,13 @@ public class UserController {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+    }
+
+    public Long getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(Long messageId) {
+        this.messageId = messageId;
     }
 }
