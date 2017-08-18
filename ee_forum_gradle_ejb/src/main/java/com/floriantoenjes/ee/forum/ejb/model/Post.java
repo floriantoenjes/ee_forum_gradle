@@ -29,7 +29,7 @@ public class Post implements Serializable {
     @Size(min = 5, max = 1000)
     private String text;
 
-//    @NotNull
+    @NotNull
     @ManyToOne
     private Thread thread;
 
