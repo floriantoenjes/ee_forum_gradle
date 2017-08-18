@@ -40,7 +40,8 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON board TO forum_user;
 CREATE TABLE thread (
 id NUMBER(19) PRIMARY KEY,
 name VARCHAR2(20) NOT NULL,
-board_id NUMBER(19) NOT NULL,author_id NUMBER(19) NOT NULL,
+board_id NUMBER(19) NOT NULL,
+author_id NUMBER(19) NOT NULL,
 created TIMESTAMP(3) NOT NULL,
 updated TIMESTAMP(3),
 board_one_to_one_id NUMBER(19),
