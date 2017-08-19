@@ -95,7 +95,9 @@ public class PostController implements Serializable {
     public String editPost() {
         postBean.editPost(post);
 
-        return "pretty:viewThread";
+        currentPage = (int) Math.ceil(post.getPostNumber() / (double) PAGE_SIZE) - 1;
+
+        return "pretty:viewThreadPages";
     }
 
     public String deletePost() {

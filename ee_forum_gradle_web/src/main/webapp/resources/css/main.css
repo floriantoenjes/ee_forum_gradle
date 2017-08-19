@@ -75,5 +75,6 @@ body {
 .messages {
     list-style-type: none;
     padding: 1em;
-    background-color: #D4EDDA;
+    background-color: green;
+    color: white;
 }
