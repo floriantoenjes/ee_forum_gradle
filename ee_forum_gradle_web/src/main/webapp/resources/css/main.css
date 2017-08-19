@@ -39,7 +39,7 @@ body {
 }
 
 .table td {
-    padding: 0.5em;
+    padding: 1em;
 }
 
 .wrapper {
@@ -77,4 +77,12 @@ body {
     padding: 1em;
     background-color: green;
     color: white;
+}
+
+.sender {
+    width: 12%;
+}
+
+.received_at {
+    width: 12%;
 }

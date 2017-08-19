@@ -6,6 +6,30 @@
         <div class="wrapper">
             <h2>#{userController.message.subject}</h2>
         </div>
-        <h:outputText value="#{userController.message.text}"/>
+        <h:dataTable styleClass="table post-table" value="#{userController.message}" var="message"
+                     rowClasses="table-even-row, table-odd-row" headerClass="table-header"
+                     columnClasses="sender, received_at, message">
+            <h:column>
+                <f:facet name="header">
+                    Sender
+                </f:facet>
+                <pretty:link mappingId="viewUser">
+                    <f:param value="#{userController.message.sender.id}"/>
+                    #{userController.message.sender.username}
+                </pretty:link>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Received at</f:facet>
+                <h:outputText value="#{userController.message.created}">
+                    <f:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Message
+                </f:facet>
+                <h:outputText value="#{userController.message.text}"/>
+            </h:column>
+        </h:dataTable>
     </ui:define>
 </ui:composition>
