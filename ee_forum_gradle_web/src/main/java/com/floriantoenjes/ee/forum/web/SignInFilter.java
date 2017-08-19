@@ -1,7 +1,9 @@
 package com.floriantoenjes.ee.forum.web;
 
+import com.floriantoenjes.ee.forum.ejb.MessageBean;
 import com.floriantoenjes.ee.forum.ejb.PostBean;
 import com.floriantoenjes.ee.forum.ejb.ThreadBean;
+import com.floriantoenjes.ee.forum.ejb.model.Message;
 import com.floriantoenjes.ee.forum.ejb.model.Post;
 import com.floriantoenjes.ee.forum.ejb.model.Thread;
 import com.floriantoenjes.ee.forum.ejb.model.User;
@@ -23,6 +25,9 @@ public class SignInFilter implements Filter {
 
     @Inject
     private SignInController signInController;
+
+    @EJB
+    private MessageBean messageBean;
 
     @EJB
     private PostBean postBean;
@@ -47,6 +52,9 @@ public class SignInFilter implements Filter {
 
         Pattern postPattern = Pattern.compile("^/board/\\d+/thread/\\d+/posts/(\\d+)/edit/$");
         Matcher postMatcher = postPattern.matcher(path);
+
+        Pattern messagePattern = Pattern.compile("^/message/(\\d+)/$");
+        Matcher messageMatcher = messagePattern.matcher(path);
 
         User user = signInController.getUser();
 
@@ -91,11 +99,18 @@ public class SignInFilter implements Filter {
             Long postId = Long.parseLong(postMatcher.group(1));
             Post post = postBean.find(postId);
 
-            if (user == null
-                    || !signInController.getUser().equals(post.getAuthor())
-                    || post.getDeleted()) {
+            if (user == null || !signInController.getUser().equals(post.getAuthor()) || post.getDeleted()) {
                 sendForbidden(httpServletRequest, httpServletResponse);
             }
+        } else if (messageMatcher.find()) {
+
+            Long messageId = Long.parseLong(messageMatcher.group(1));
+            Message message = messageBean.find(messageId);
+
+            if (user == null || !signInController.getUser().equals(message.getReceiver())) {
+                sendForbidden(httpServletRequest, httpServletResponse);
+            }
+
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

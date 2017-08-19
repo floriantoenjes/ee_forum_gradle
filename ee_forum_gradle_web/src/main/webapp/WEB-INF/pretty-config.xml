@@ -116,7 +116,7 @@
     </url-mapping>
 
     <url-mapping id="viewMessage">
-        <pattern value="/message/#{userController.messageId}"/>
+        <pattern value="/message/#{userController.messageId}/"/>
         <view-id value="/message_detail.xhtml"/>
         <action>#{userController.loadMessage}</action>
     </url-mapping>
