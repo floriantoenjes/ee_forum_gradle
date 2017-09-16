@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 
 // ToDo: Perhaps declare filter priority in web.xml
 @WebFilter(urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
-public class SignInFilter implements Filter {
+public class SecurityFilter implements Filter {
 
     @Inject
     private SignInController signInController;
