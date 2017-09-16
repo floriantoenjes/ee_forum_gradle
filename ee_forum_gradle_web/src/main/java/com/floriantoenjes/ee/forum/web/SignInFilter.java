@@ -102,6 +102,8 @@ public class SignInFilter implements Filter {
             if (user == null || !signInController.getUser().equals(post.getAuthor()) || post.getDeleted()) {
                 sendForbidden(httpServletRequest, httpServletResponse);
             }
+
+        /* Check if user is receiver of the message */
         } else if (messageMatcher.find()) {
 
             Long messageId = Long.parseLong(messageMatcher.group(1));
