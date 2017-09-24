@@ -33,6 +33,9 @@
                 </pretty:link>
                 <br/>
                 <br/>
+                <h:outputText value="Posts: #{post.author.postCount}"/>
+                <br/>
+                <br/>
                 <h:outputText value="#{post.created}">
                     <f:convertDateTime dateStyle="short" type="both"/>
                 </h:outputText>
