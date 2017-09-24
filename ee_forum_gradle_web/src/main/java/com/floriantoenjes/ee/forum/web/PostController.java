@@ -81,7 +81,8 @@ public class PostController implements Serializable {
 
     public String createPost(User author) {
         Thread thread = threadBean.findWithPosts(threadId);
-        thread.getBoard().clearLastThread().ifPresent(threadBean::editThread);
+        Board board = thread.getBoard();
+        board.clearLastThread().ifPresent(threadBean::editThread);
 
         thread.clearLastPost();
         thread.addPost(post);
@@ -92,7 +93,7 @@ public class PostController implements Serializable {
         author.addPost(post);
 
         threadBean.editThread(thread);
-        boardBean.editBoard(thread.getBoard());
+        boardBean.editBoard(board);
         userBean.merge(author);
 
         currentPage = (int) Math.ceil(thread.getPosts().size() / (double) PAGE_SIZE) - 1;
