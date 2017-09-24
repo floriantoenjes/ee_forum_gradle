@@ -60,6 +60,9 @@ public class User implements Serializable {
     )
     private List<Role> roles;
 
+    @OneToMany(mappedBy = "author")
+    private List<Post> posts;
+
     @Column(name = "POST_COUNT")
     private Long postCount;
 
@@ -154,7 +157,28 @@ public class User implements Serializable {
         this.messagesReceived = messagesReceived;
     }
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public boolean addPost(Post post) {
+        boolean added;
+        if (posts == null) {
+            posts = new ArrayList<>();
+        }
+        added = posts.add(post);
+        postCount = (long) posts.size();
+        return added;
+    }
+
     public Long getPostCount() {
+        if (postCount == null) {
+            return 0L;
+        }
         return postCount;
     }
 

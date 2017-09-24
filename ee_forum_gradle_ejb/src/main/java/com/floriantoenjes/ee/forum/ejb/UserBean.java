@@ -50,6 +50,13 @@ public class UserBean {
         return em.find(User.class, id);
     }
 
+    public User findWithPosts(Long id) {
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u JOIN FETCH u.posts WHERE u.id = :id",
+                User.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
+    }
+
     public Optional<byte[]> getAvatar(Long userId) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<byte[]> cq = cb.createQuery(byte[].class);

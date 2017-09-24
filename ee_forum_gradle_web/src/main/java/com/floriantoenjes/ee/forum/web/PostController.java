@@ -3,6 +3,7 @@ package com.floriantoenjes.ee.forum.web;
 import com.floriantoenjes.ee.forum.ejb.BoardBean;
 import com.floriantoenjes.ee.forum.ejb.PostBean;
 import com.floriantoenjes.ee.forum.ejb.ThreadBean;
+import com.floriantoenjes.ee.forum.ejb.UserBean;
 import com.floriantoenjes.ee.forum.ejb.model.Board;
 import com.floriantoenjes.ee.forum.ejb.model.Post;
 import com.floriantoenjes.ee.forum.ejb.model.Thread;
@@ -12,6 +13,7 @@ import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,6 +48,9 @@ public class PostController implements Serializable {
 
     @EJB
     private BoardBean boardBean;
+
+    @EJB
+    private UserBean userBean;
 
     public String initPost() {
         post = postBean.find(postId);
@@ -83,9 +88,12 @@ public class PostController implements Serializable {
 
         post.setAuthor(author);
         post.setCreated(new Date());
+        author = userBean.findWithPosts(author.getId());
+        author.addPost(post);
 
         threadBean.editThread(thread);
         boardBean.editBoard(thread.getBoard());
+        userBean.merge(author);
 
         currentPage = (int) Math.ceil(thread.getPosts().size() / (double) PAGE_SIZE) - 1;
 
