@@ -49,7 +49,12 @@ public class PostBean {
         query.setParameter("text", "%" + text + "%");
 
         return query.getResultList();
+    }
 
+    public long getTotalPostsByText(String text) {
+        Query queryTotal = em.createQuery("SELECT COUNT(p.id) FROM Post p WHERE LOWER(p.text) LIKE :text");
+        queryTotal.setParameter("text", "%" + text + "%");
+        return (long) queryTotal.getSingleResult();
     }
 
     public void editPost(Post post) {

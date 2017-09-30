@@ -41,17 +41,19 @@
                 </h:outputText>
             </h:column>
         </h:dataTable>
-        <p>Page
-            <ui:repeat value="#{searchController.pages}" var="page">
-                <pretty:link mappingId="searchResultsPages" rendered="#{page != postController.currentPage}">
-                    <f:param value="#{searchController.query}"/>
-                    <f:param value="#{page}"/>
-                    #{page + 1}
-                </pretty:link>
-                <ui:fragment rendered="#{page == postController.currentPage}">
-                    #{page + 1}
-                </ui:fragment>
-            </ui:repeat>
-        </p>
+        <div class="wrapper">
+            <p>Page
+                <ui:repeat value="#{searchController.pages}" var="page">
+                    <pretty:link mappingId="searchResultsPages" rendered="#{page != searchController.currentPage}">
+                        <f:param value="#{searchController.query}"/>
+                        <f:param value="#{page}"/>
+                        #{page + 1}
+                    </pretty:link>
+                    <ui:fragment rendered="#{page == searchController.currentPage}">
+                        #{page + 1}
+                    </ui:fragment>
+                </ui:repeat>
+            </p>
+        </div>
     </ui:define>
 </ui:composition>
