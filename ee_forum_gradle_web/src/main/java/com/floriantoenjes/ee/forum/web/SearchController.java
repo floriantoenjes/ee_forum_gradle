@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,12 +23,15 @@ public class SearchController implements Serializable {
     private static final String ELLIPSIS = "...";
     private static final int PAGE_SIZE = 5;
 
+    private int currentPage;
+    private List<Integer> pages = new ArrayList<>();
+
     @EJB
     private PostBean postBean;
 
     public void search() {
         if (query != null) {
-            results = postBean.findByText(query.toLowerCase());
+            results = postBean.findByText(query.toLowerCase(), currentPage, PAGE_SIZE);
             Pattern queryPattern = Pattern.compile(String.format("(.{0,%d}%s.{0,%d})",
                     RESULT_LENGTH / 2, query, RESULT_LENGTH / 2), Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
             for (Post result : results) {

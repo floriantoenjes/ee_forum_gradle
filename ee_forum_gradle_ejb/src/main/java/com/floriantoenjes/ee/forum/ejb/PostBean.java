@@ -41,9 +41,11 @@ public class PostBean {
         return (long) queryTotal.getSingleResult();
     }
 
-    public List<Post> findByText(String text) {
+    public List<Post> findByText(String text, int currentPage, int pageSize) {
         TypedQuery<Post> query = em.createQuery("SELECT p FROM Post p WHERE LOWER(p.text) LIKE :text",
                 Post.class);
+        query.setFirstResult(currentPage * pageSize);
+        query.setMaxResults(pageSize);
         query.setParameter("text", "%" + text + "%");
 
         return query.getResultList();
