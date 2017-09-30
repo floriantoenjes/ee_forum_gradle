@@ -10,7 +10,7 @@
         <h:outputText value="Posts: #{userController.user.postCount}"/>
         <br/>
         <pretty:link mappingId="sendMessage" rendered="#{signInController.user != null and userController.userId != signInController.user.id}">
-            <f:param value="#{userController.userId}"/>
+            <f:param value="#{userController.user.id}"/>
             Send a message
         </pretty:link>
     </ui:define>
