@@ -38,11 +38,16 @@
     </url-mapping>
 
     <url-mapping id="searchResults" parentId="search">
-        <pattern value="#{searchController.query}"/>
+        <pattern value="#{searchController.query}/"/>
         <view-id value="/search.xhtml"/>
         <action>#{searchController.search}</action>
     </url-mapping>
 
+    <url-mapping id="searchResultsPages" parentId="searchResults">
+        <pattern value="page/#{searchController.currentPage}/"/>
+        <view-id value="/search.xhtml"/>
+        <action>#{searchController.search}</action>
+    </url-mapping>
 
     <url-mapping id="viewBoard">
         <pattern value="/board/#{threadController.boardId}/"/>
