@@ -56,7 +56,7 @@
     </url-mapping>
 
     <url-mapping id="viewBoardPages" parentId="viewBoard">
-        <pattern value="page/#{threadController.currentPage}"/>
+        <pattern value="page/#{threadController.currentPage}/"/>
         <view-id value="/board.xhtml"/>
         <action>#{threadController.loadThreads}</action>
     </url-mapping>
@@ -74,7 +74,7 @@
     </url-mapping>
 
     <url-mapping id="viewThreadPages" parentId="viewThread">
-        <pattern value="page/#{postController.currentPage}"/>
+        <pattern value="page/#{postController.currentPage}/"/>
         <view-id value="/thread.xhtml"/>
         <action>#{postController.loadPosts}</action>
     </url-mapping>
