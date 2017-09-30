@@ -30,12 +30,12 @@
                 </f:facet>
                 <h:outputText value="#{userController.message.text}"/>
             </h:column>
-            <h:column>
-                <pretty:link mappingId="sendMessage">
-                    <f:param value="#{userController.message.receiver.id}"/>
-                    Reply
-                </pretty:link>
-            </h:column>
         </h:dataTable>
+        <div class="wrapper">
+            <pretty:link mappingId="sendMessage">
+                <f:param value="#{userController.message.receiver.id}"/>
+                Reply
+            </pretty:link>
+        </div>
     </ui:define>
 </ui:composition>
