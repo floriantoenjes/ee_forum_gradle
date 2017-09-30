@@ -58,6 +58,7 @@ public class SecurityFilter implements Filter {
 
         User user = signInController.getUser();
 
+        /* An administrator has full access */
         if (user != null && user.hasRole("ADMIN")) {
 
             filterChain.doFilter(servletRequest, servletResponse);
@@ -68,7 +69,7 @@ public class SecurityFilter implements Filter {
 
             sendForbidden(httpServletRequest, httpServletResponse);
 
-        /* Restrict sign in and register pages for signed in user */
+        /* Restrict sign in and register pages for signed in users */
         } else if ((path.startsWith("/signin") || path.startsWith("/register")) && user != null) {
 
             servletRequest.getRequestDispatcher("/").forward(servletRequest, servletResponse);
