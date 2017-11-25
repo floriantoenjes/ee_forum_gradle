@@ -64,6 +64,7 @@ public class PostController implements Serializable {
         if (thread == null) {
             return "pretty:not-found";
         }
+
         board = thread.getBoard();
         posts = postBean.findByThreadId(threadId, currentPage, PAGE_SIZE);
 

@@ -64,6 +64,7 @@ public class ThreadController implements Serializable {
         if (board == null) {
             return "pretty:not-found";
         }
+
         threads = threadBean.findByBoardId(boardId, currentPage, PAGE_SIZE);
 
         if (!createPagination()) {
