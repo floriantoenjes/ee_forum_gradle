@@ -65,14 +65,10 @@ public class ThreadController implements Serializable {
             return "pretty:not-found";
         }
         threads = threadBean.findByBoardId(boardId, currentPage, PAGE_SIZE);
-        long totalThreads = threadBean.getTotalThreadsByBoardId(boardId);
 
-        if (currentPage * PAGE_SIZE > totalThreads) {
+        if (!createPagination()) {
             return "pretty:not-found";
         }
-
-        pages.clear();
-        IntStream.range(0, (int) Math.ceil(totalThreads / (double) PAGE_SIZE)).forEach(pages::add);
 
         return null;
     }
@@ -110,6 +106,19 @@ public class ThreadController implements Serializable {
         boardBean.editBoard(board);
 
         return "pretty:viewBoard";
+    }
+
+    private boolean createPagination() {
+        long totalThreads = threadBean.getTotalThreadsByBoardId(boardId);
+
+        if (currentPage * PAGE_SIZE > totalThreads) {
+            return false;
+        }
+
+        pages.clear();
+        IntStream.range(0, (int) Math.ceil(totalThreads / (double) PAGE_SIZE)).forEach(pages::add);
+
+        return true;
     }
 
     public long getBoardId() {

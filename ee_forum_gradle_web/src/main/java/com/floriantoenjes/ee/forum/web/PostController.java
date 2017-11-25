@@ -13,7 +13,6 @@ import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,14 +66,10 @@ public class PostController implements Serializable {
         }
         board = thread.getBoard();
         posts = postBean.findByThreadId(threadId, currentPage, PAGE_SIZE);
-        long totalPosts = postBean.getTotalPostsByThreadId(threadId);
 
-        if (currentPage * PAGE_SIZE > totalPosts) {
+        if (!createPagination()) {
             return "pretty:not-found";
         }
-
-        pages.clear();
-        IntStream.range(0, (int) Math.ceil(totalPosts / (double) PAGE_SIZE)).forEach(pages::add);
 
         return null;
     }
@@ -118,6 +113,19 @@ public class PostController implements Serializable {
         currentPage = (int) Math.ceil(post.getPostNumber() / (double) PAGE_SIZE) - 1;
 
         return "pretty:viewThreadPages";
+    }
+
+    private boolean createPagination() {
+        long totalPosts = postBean.getTotalPostsByThreadId(threadId);
+
+        if (currentPage * PAGE_SIZE > totalPosts) {
+            return false;
+        }
+
+        pages.clear();
+        IntStream.range(0, (int) Math.ceil(totalPosts / (double) PAGE_SIZE)).forEach(pages::add);
+
+        return true;
     }
 
     public Long getBoardId() {
