@@ -1,12 +1,11 @@
 package com.floriantoenjes.ee.forum.web;
 
+import com.floriantoenjes.ee.forum.ejb.EntityBean;
 import com.floriantoenjes.ee.forum.ejb.MessageBean;
 import com.floriantoenjes.ee.forum.ejb.PostBean;
 import com.floriantoenjes.ee.forum.ejb.ThreadBean;
-import com.floriantoenjes.ee.forum.ejb.model.Message;
-import com.floriantoenjes.ee.forum.ejb.model.Post;
+import com.floriantoenjes.ee.forum.ejb.model.*;
 import com.floriantoenjes.ee.forum.ejb.model.Thread;
-import com.floriantoenjes.ee.forum.ejb.model.User;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -22,6 +21,14 @@ import java.util.regex.Pattern;
 // ToDo: Perhaps declare filter priority in web.xml
 @WebFilter(urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
 public class SecurityFilter implements Filter {
+
+    private User user;
+
+    private String path;
+
+    private HttpServletRequest httpServletRequest;
+
+    private HttpServletResponse httpServletResponse;
 
     @Inject
     private SignInController signInController;
@@ -41,24 +48,16 @@ public class SecurityFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
 
-        String path = httpServletRequest.getRequestURI().substring(httpServletRequest.getContextPath().length());
+        httpServletRequest = (HttpServletRequest) servletRequest;
+        httpServletResponse = (HttpServletResponse) servletResponse;
 
-        Pattern threadPattern = Pattern.compile("^/board/\\d+/thread/(\\d+)/edit/$");
-        Matcher threadMatcher = threadPattern.matcher(path);
+        path = httpServletRequest.getRequestURI().substring(httpServletRequest.getContextPath().length());
+        user = signInController.getUser();
 
-        Pattern postPattern = Pattern.compile("^/board/\\d+/thread/\\d+/posts/(\\d+)/edit/$");
-        Matcher postMatcher = postPattern.matcher(path);
-
-        Pattern messagePattern = Pattern.compile("^/message/(\\d+)/$");
-        Matcher messageMatcher = messagePattern.matcher(path);
-
-        User user = signInController.getUser();
-
-        /* An administrator has full access */
+        /* Administrator has full access */
         if (user != null && user.hasRole("ADMIN")) {
 
             filterChain.doFilter(servletRequest, servletResponse);
@@ -81,42 +80,36 @@ public class SecurityFilter implements Filter {
                 path.startsWith("/control-center") ||
                 path.startsWith("/message")
         ) && user == null) {
-
             sendUnauthorized(httpServletRequest, httpServletResponse);
-
-        /* Check if user is author of the thread */
-        } else if (threadMatcher.find()) {
-
-            Long threadId = Long.parseLong(threadMatcher.group(1));
-            Thread thread = threadBean.find(threadId);
-
-            if (user == null || !signInController.getUser().equals(thread.getAuthor())) {
-                sendForbidden(httpServletRequest, httpServletResponse);
-            }
-
-        /* Check if user is author of the post or post is marked as deleted */
-        } else if (postMatcher.find()) {
-
-            Long postId = Long.parseLong(postMatcher.group(1));
-            Post post = postBean.find(postId);
-
-            if (user == null || !signInController.getUser().equals(post.getAuthor()) || post.getDeleted()) {
-                sendForbidden(httpServletRequest, httpServletResponse);
-            }
-
-        /* Check if user is receiver of the message */
-        } else if (messageMatcher.find()) {
-
-            Long messageId = Long.parseLong(messageMatcher.group(1));
-            Message message = messageBean.find(messageId);
-
-            if (user == null || !signInController.getUser().equals(message.getReceiver())) {
-                sendForbidden(httpServletRequest, httpServletResponse);
-            }
-
         }
 
+        /* Check if user is author of the thread */
+        filterAuthEntity(threadBean, "^/board/\\d+/thread/(\\d+)/edit/$");
+
+        /* Check if user is author of the post or post is marked as deleted */
+        filterAuthEntity(postBean, "^/board/\\d+/thread/\\d+/posts/(\\d+)/edit/$");
+
+        /* Check if user is receiver of the message */
+        filterAuthEntity(messageBean, "^/message/(\\d+)/$");
+
+
         filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    private <T extends AuthEntity> void filterAuthEntity(EntityBean<T> entityBean, String regex)
+            throws IOException, ServletException {
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(path);
+
+        if (matcher.find()) {
+            Long id = Long.parseLong(matcher.group(1));
+            T entity = entityBean.find(id);
+
+            if (user == null || !entity.isUserAuthorized(user)) {
+                sendForbidden(httpServletRequest, httpServletResponse);
+            }
+        }
     }
 
     private void sendUnauthorized(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)

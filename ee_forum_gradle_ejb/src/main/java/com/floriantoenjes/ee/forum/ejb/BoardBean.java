@@ -12,7 +12,7 @@ import java.util.List;
 
 @Stateless
 @LocalBean
-public class BoardBean {
+public class BoardBean extends EntityBean<Board> {
 
     @PersistenceContext
     private EntityManager em;
