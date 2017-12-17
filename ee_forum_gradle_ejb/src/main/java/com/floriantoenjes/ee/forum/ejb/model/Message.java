@@ -12,7 +12,7 @@ import java.util.Date;
         name = "Message.findAll",
         query = "SELECT m FROM Message m"
 )
-public class Message implements Serializable {
+public class Message implements AuthEntity, Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -98,5 +98,10 @@ public class Message implements Serializable {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    @Override
+    public boolean isUserAuthorized(User user) {
+        return receiver.equals(user);
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Stateless
 @LocalBean
-public class MessageBean {
+public class MessageBean extends EntityBean<Message> {
     @PersistenceContext
     private EntityManager em;
 

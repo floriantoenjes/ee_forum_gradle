@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Entity
 @Table(schema = "FORUM", name = "THREAD")
-public class Thread implements Serializable {
+public class Thread implements AuthEntity, Serializable {
     private static final long serialVersionUID = 1L;
     private static final int PAGE_SIZE = 5;
 
@@ -206,5 +206,10 @@ public class Thread implements Serializable {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public boolean isUserAuthorized(User user) {
+        return author.equals(user);
     }
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(schema = "FORUM", name = "POST")
-public class Post implements Serializable {
+public class Post implements AuthEntity, Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -131,5 +131,10 @@ public class Post implements Serializable {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public boolean isUserAuthorized(User user) {
+        return author.equals(user) || deleted;
     }
 }

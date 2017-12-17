@@ -1,5 +1,6 @@
 package com.floriantoenjes.ee.forum.ejb;
 
+import com.floriantoenjes.ee.forum.ejb.model.Board;
 import com.floriantoenjes.ee.forum.ejb.model.Thread;
 
 import javax.ejb.LocalBean;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Stateless
 @LocalBean
-public class ThreadBean {
+public class ThreadBean extends EntityBean<Thread> {
 
     @PersistenceContext
     private EntityManager em;
