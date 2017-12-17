@@ -135,6 +135,6 @@ public class Post implements AuthEntity, Serializable {
 
     @Override
     public boolean isUserAuthorized(User user) {
-        return author.equals(user) || deleted;
+        return author.equals(user) && !deleted;
     }
 }
