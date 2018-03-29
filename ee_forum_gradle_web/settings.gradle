@@ -1,3 +1,4 @@
 rootProject.name = 'ee_forum_gradle_web'
 
 include('ee_forum_gradle_ejb')
+project(':ee_forum_gradle_ejb').projectDir = new File('../ee_forum_gradle_ejb')
