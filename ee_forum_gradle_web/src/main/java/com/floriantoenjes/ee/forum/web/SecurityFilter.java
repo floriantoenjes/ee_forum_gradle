@@ -4,7 +4,8 @@ import com.floriantoenjes.ee.forum.ejb.EntityBean;
 import com.floriantoenjes.ee.forum.ejb.MessageBean;
 import com.floriantoenjes.ee.forum.ejb.PostBean;
 import com.floriantoenjes.ee.forum.ejb.ThreadBean;
-import com.floriantoenjes.ee.forum.ejb.model.*;
+import com.floriantoenjes.ee.forum.ejb.model.AuthEntity;
+import com.floriantoenjes.ee.forum.ejb.model.User;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -87,18 +88,21 @@ public class SecurityFilter implements Filter {
             throws IOException, ServletException {
 
             /* Only an administrator can create boards */
-        if (path.matches("^/board(_form\\.xhtml)*")){
-
+        if (path.matches("^/board_form\\.xhtml")){
             sendForbidden(httpServletRequest, httpServletResponse);
 
             /* Restrict views to signed in users */
-        } else if (Arrays.stream(pathsForGuests).anyMatch(path::startsWith) && user != null) {
+        } else if (isViewRestricted(pathsForGuests) && user != null) {
             servletRequest.getRequestDispatcher("/").forward(servletRequest, servletResponse);
 
             /* Restrict views to guests */
-        } else if (Arrays.stream(pathsForUsers).anyMatch(path::startsWith) && user == null) {
+        } else if (isViewRestricted(pathsForUsers) && user == null) {
             sendUnauthorized(httpServletRequest, httpServletResponse);
         }
+    }
+
+    private boolean isViewRestricted(String[] paths) {
+        return Arrays.stream(paths).anyMatch(path::startsWith);
     }
 
     private void filterAuthEntities(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
