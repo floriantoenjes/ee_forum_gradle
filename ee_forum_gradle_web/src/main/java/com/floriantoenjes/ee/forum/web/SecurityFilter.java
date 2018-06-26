@@ -5,7 +5,6 @@ import com.floriantoenjes.ee.forum.ejb.MessageBean;
 import com.floriantoenjes.ee.forum.ejb.PostBean;
 import com.floriantoenjes.ee.forum.ejb.ThreadBean;
 import com.floriantoenjes.ee.forum.ejb.model.*;
-import com.floriantoenjes.ee.forum.ejb.model.Thread;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -43,7 +42,7 @@ public class SecurityFilter implements Filter {
     private ThreadBean threadBean;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 
@@ -57,31 +56,45 @@ public class SecurityFilter implements Filter {
         path = httpServletRequest.getRequestURI().substring(httpServletRequest.getContextPath().length());
         user = signInController.getUser();
 
-        /* Administrator has full access */
-        if (user != null && user.hasRole("ADMIN")) {
-
+        if (isAdmin()) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
+        }
 
-        /* Only an administrator can create boards */
-        } else if (path.matches("^\\/board(_form\\.xhtml)*")){
+        restrictViews(servletRequest, servletResponse);
+
+        filterAuthEntities(servletRequest, servletResponse, filterChain);
+    }
+
+    private boolean isAdmin() {
+        return user != null && user.hasRole("ADMIN");
+    }
+
+    private void restrictViews(ServletRequest servletRequest, ServletResponse servletResponse)
+            throws IOException, ServletException {
+
+            /* Only an administrator can create boards */
+        if (path.matches("^/board(_form\\.xhtml)*")){
 
             sendForbidden(httpServletRequest, httpServletResponse);
 
-        /* Restrict sign in and register pages for signed in users */
+            /* Restrict sign in and register pages for signed in users */
         } else if ((path.startsWith("/signin") || path.startsWith("/register")) && user != null) {
 
             servletRequest.getRequestDispatcher("/").forward(servletRequest, servletResponse);
 
-        /* Restrict views to signed in users */
+            /* Restrict views to signed in users */
         } else if ((
                 path.startsWith("/thread_form") ||
-                path.startsWith("/post_form") ||
-                path.startsWith("/control-center") ||
-                path.startsWith("/message")
+                        path.startsWith("/post_form") ||
+                        path.startsWith("/control-center") ||
+                        path.startsWith("/message")
         ) && user == null) {
             sendUnauthorized(httpServletRequest, httpServletResponse);
         }
+    }
+
+    private void filterAuthEntities(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
         /* Check if user is author of the thread */
         filterAuthEntity(threadBean, "^/board/\\d+/thread/(\\d+)/edit/$");
