@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +21,18 @@ import java.util.regex.Pattern;
 // ToDo: Perhaps declare filter priority in web.xml
 @WebFilter(urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
 public class SecurityFilter implements Filter {
+
+    private final String[] pathsForGuests = {
+            "/signin",
+            "/register"
+    };
+
+    private final String[] pathsForUsers = {
+            "/thread_form",
+            "/post_form",
+            "/control-center",
+            "/message"
+    };
 
     private User user;
 
@@ -78,18 +91,12 @@ public class SecurityFilter implements Filter {
 
             sendForbidden(httpServletRequest, httpServletResponse);
 
-            /* Restrict sign in and register pages for signed in users */
-        } else if ((path.startsWith("/signin") || path.startsWith("/register")) && user != null) {
-
+            /* Restrict views to signed in users */
+        } else if (Arrays.stream(pathsForGuests).anyMatch(path::startsWith) && user != null) {
             servletRequest.getRequestDispatcher("/").forward(servletRequest, servletResponse);
 
-            /* Restrict views to signed in users */
-        } else if ((
-                path.startsWith("/thread_form") ||
-                        path.startsWith("/post_form") ||
-                        path.startsWith("/control-center") ||
-                        path.startsWith("/message")
-        ) && user == null) {
+            /* Restrict views to guests */
+        } else if (Arrays.stream(pathsForUsers).anyMatch(path::startsWith) && user == null) {
             sendUnauthorized(httpServletRequest, httpServletResponse);
         }
     }
