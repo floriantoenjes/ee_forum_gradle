@@ -23,6 +23,10 @@ import java.util.regex.Pattern;
 @WebFilter(urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
 public class SecurityFilter implements Filter {
 
+    private final String[] pathsForAdmins = {
+            "/board_form"
+    };
+
     private final String[] pathsForGuests = {
             "/signin",
             "/register"
@@ -87,15 +91,12 @@ public class SecurityFilter implements Filter {
     private void restrictViews(ServletRequest servletRequest, ServletResponse servletResponse)
             throws IOException, ServletException {
 
-            /* Only an administrator can create boards */
-        if (path.matches("^/board_form\\.xhtml")){
+        if (isViewRestricted(pathsForAdmins)) {
             sendForbidden(httpServletRequest, httpServletResponse);
 
-            /* Restrict views to signed in users */
         } else if (isViewRestricted(pathsForGuests) && user != null) {
             servletRequest.getRequestDispatcher("/").forward(servletRequest, servletResponse);
 
-            /* Restrict views to guests */
         } else if (isViewRestricted(pathsForUsers) && user == null) {
             sendUnauthorized(httpServletRequest, httpServletResponse);
         }
