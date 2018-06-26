@@ -32,28 +32,49 @@ public class SearchController implements Serializable {
 
     public void search() {
         if (query != null) {
-            results = postBean.findByText(query.toLowerCase(), currentPage, PAGE_SIZE);
-            long totalPosts = postBean.getTotalPostsByText(query.toLowerCase());
-            Pattern queryPattern = Pattern.compile(String.format("(.{0,%d}%s.{0,%d})",
-                    RESULT_LENGTH / 2, query, RESULT_LENGTH / 2), Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+            results = getSearchResults();
+            long totalPosts = getTotalPostCount();
+            Pattern queryPattern = compileSearchPattern();
+
             for (Post result : results) {
                 Matcher queryMatcher = queryPattern.matcher(result.getText());
-                if (queryMatcher.find()) {
-                    String resultText = queryMatcher.group(0);
-
-                    if (queryMatcher.start() != 0) {
-                        resultText = ELLIPSIS + resultText;
-                    }
-
-                    if (!queryMatcher.hitEnd()) {
-                        resultText = resultText + ELLIPSIS;
-                    }
-                    result.setText(resultText);
-                }
+                wrapResult(result, queryMatcher);
             }
-            pages.clear();
-            IntStream.range(0, (int) Math.ceil(totalPosts / (double) PAGE_SIZE)).forEach(pages::add);
+            createPagination(totalPosts);
         }
+    }
+
+    private List<Post> getSearchResults() {
+        return postBean.findByText(query.toLowerCase(), currentPage, PAGE_SIZE);
+    }
+
+    private long getTotalPostCount() {
+        return postBean.getTotalPostsByText(query.toLowerCase());
+    }
+
+    private Pattern compileSearchPattern() {
+        return Pattern.compile(String.format("(.{0,%d}%s.{0,%d})",
+                RESULT_LENGTH / 2, query, RESULT_LENGTH / 2), Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+    }
+
+    private void wrapResult(Post result, Matcher queryMatcher) {
+        if (queryMatcher.find()) {
+            String resultText = queryMatcher.group(0);
+
+            if (queryMatcher.start() != 0) {
+                resultText = ELLIPSIS + resultText;
+            }
+
+            if (!queryMatcher.hitEnd()) {
+                resultText = resultText + ELLIPSIS;
+            }
+            result.setText(resultText);
+        }
+    }
+
+    private void createPagination(long totalPosts) {
+        pages.clear();
+        IntStream.range(0, (int) Math.ceil(totalPosts / (double) PAGE_SIZE)).forEach(pages::add);
     }
 
     public int getResultPage(Long postNumber) {
