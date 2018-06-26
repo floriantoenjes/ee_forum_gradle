@@ -54,7 +54,10 @@ public class SearchController implements Serializable {
 
     private Pattern compileSearchPattern() {
         return Pattern.compile(String.format("(.{0,%d}%s.{0,%d})",
-                RESULT_LENGTH / 2, query, RESULT_LENGTH / 2), Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+                RESULT_LENGTH / 2,
+                query,
+                RESULT_LENGTH / 2),
+                Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
     }
 
     private void wrapResult(Post result, Matcher queryMatcher) {
