@@ -81,7 +81,9 @@ public class SecurityFilter implements Filter {
 
         restrictViews(servletRequest, servletResponse);
 
-        filterAuthEntities(servletRequest, servletResponse, filterChain);
+        filterAuthEntities();
+
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     private boolean isAdmin() {
@@ -106,7 +108,7 @@ public class SecurityFilter implements Filter {
         return Arrays.stream(paths).anyMatch(path::startsWith);
     }
 
-    private void filterAuthEntities(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    private void filterAuthEntities() throws IOException, ServletException {
 
         /* Check if user is author of the thread */
         filterAuthEntity(threadBean, "^/board/\\d+/thread/(\\d+)/edit/$");
@@ -117,8 +119,6 @@ public class SecurityFilter implements Filter {
         /* Check if user is receiver of the message */
         filterAuthEntity(messageBean, "^/message/(\\d+)/$");
 
-
-        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     private <T extends AuthEntity> void filterAuthEntity(EntityBean<T> entityBean, String regex)
