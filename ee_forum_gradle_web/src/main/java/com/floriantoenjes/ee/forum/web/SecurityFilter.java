@@ -74,7 +74,7 @@ public class SecurityFilter implements Filter {
         path = httpServletRequest.getRequestURI().substring(httpServletRequest.getContextPath().length());
         user = signInController.getUser();
 
-        if (isAdmin()) {
+        if (isUserAdmin()) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
@@ -86,7 +86,7 @@ public class SecurityFilter implements Filter {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    private boolean isAdmin() {
+    private boolean isUserAdmin() {
         return user != null && user.hasRole("ADMIN");
     }
 
