@@ -92,7 +92,7 @@ public class PostController implements Serializable {
         boardBean.editBoard(board);
         userBean.merge(author);
 
-        currentPage = (int) Math.ceil(thread.getPosts().size() / (double) PAGE_SIZE) - 1;
+        currentPage =  calculateCurrentPage(thread.getPosts().size());
 
         return "pretty:viewThreadPages";
     }
@@ -100,7 +100,7 @@ public class PostController implements Serializable {
     public String editPost() {
         postBean.editPost(post);
 
-        currentPage = (int) Math.ceil(post.getPostNumber() / (double) PAGE_SIZE) - 1;
+        currentPage = calculateCurrentPage(post.getPostNumber());
 
         return "pretty:viewThreadPages";
     }
@@ -111,7 +111,7 @@ public class PostController implements Serializable {
         post.setText("This post has been deleted.");
         postBean.editPost(post);
 
-        currentPage = (int) Math.ceil(post.getPostNumber() / (double) PAGE_SIZE) - 1;
+        currentPage = calculateCurrentPage(post.getPostNumber());
 
         return "pretty:viewThreadPages";
     }
@@ -127,6 +127,10 @@ public class PostController implements Serializable {
         IntStream.range(0, (int) Math.ceil(totalPosts / (double) PAGE_SIZE)).forEach(pages::add);
 
         return true;
+    }
+
+    private int calculateCurrentPage(long n) {
+        return (int) Math.ceil(n / (double) PAGE_SIZE) - 1;
     }
 
     public Long getBoardId() {
