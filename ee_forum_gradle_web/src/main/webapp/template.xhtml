@@ -11,19 +11,27 @@
             <h:outputText value="Forum Enterprise Edition"/>
         </title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <h:outputStylesheet library="css" name="main.css"/>
+        <!--<h:outputStylesheet library="css" name="main.css"/>-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="main2.css"/>
     </h:head>
     <h:body>
-        <div class="wrapper">
+        <div class="container content">
+            <ui:insert name="header">
+                <ui:include src="partials/header.xhtml"/>
+            </ui:insert>
+
             <h:messages globalOnly="true" styleClass="messages"/>
+
+            <ui:insert name="content">
+            </ui:insert>
         </div>
-        <ui:insert name="header">
-            <ui:include src="partials/header.xhtml"/>
-        </ui:insert>
 
-        <ui:insert name="content">
-        </ui:insert>
-
+        <script type="application/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script type="application/javascript"
+                src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script type="application/javascript"
+                src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     </h:body>
 </f:view>
 </html>

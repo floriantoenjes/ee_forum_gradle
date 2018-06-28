@@ -4,11 +4,12 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:pretty="http://ocpsoft.com/prettyfaces">
     <ui:define name="content">
-        <div class="wrapper">
-            <h2><h:outputLabel value="Boards"/></h2>
+
+        <div class="">
+            <h4><h:outputLabel value="Boards"/></h4>
         </div>
 
-        <h:dataTable styleClass="table post-table" value="#{boardController.boards}" rowClasses="table-even-row, table-odd-row" var="board">
+        <h:dataTable styleClass="table table-bordered" value="#{boardController.boards}" rowClasses="" var="board">
             <h:column>
                 <f:facet name="header">Name</f:facet>
                 <pretty:link mappingId="viewBoard">
@@ -43,7 +44,7 @@
                 </h:outputText>
             </h:column>
         </h:dataTable>
-        <div class="wrapper">
+        <div class="">
             <pretty:link mappingId="addBoard" rendered="#{signInController.user.hasRole('ADMIN')}">
                 New Board
             </pretty:link>
