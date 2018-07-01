@@ -8,11 +8,11 @@
             <pretty:link mappingId="home">
                 Overview
             </pretty:link>
-            <h3><h:outputLabel value="#{threadController.board.name}"/></h3>
+            <h4><h:outputLabel value="#{threadController.board.name}"/></h4>
         </div>
 
-        <h:dataTable styleClass="table post-table" value="#{threadController.threads}" var="thread"
-                     rowClasses="table-even-row, table-odd-row" headerClass="table-header" rows="5">
+        <h:dataTable styleClass="table table-bordered" value="#{threadController.threads}" var="thread"
+                     rowClasses="" headerClass="" rows="5">
             <f:facet name="header">Threads</f:facet>
             <h:column>
                 <f:facet name="header">Thread</f:facet>
