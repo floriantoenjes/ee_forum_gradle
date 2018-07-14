@@ -4,7 +4,7 @@ import com.floriantoenjes.ee.forum.ejb.PostBean;
 import com.floriantoenjes.ee.forum.ejb.model.Post;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,10 +14,11 @@ import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 @Named
-@RequestScoped
+@ViewScoped
 public class SearchController implements Serializable {
 
     private String query;
+    private String previousQuery;
     private List<Post> results;
 
     private static final int RESULT_LENGTH = 250;
@@ -30,8 +31,15 @@ public class SearchController implements Serializable {
     @EJB
     private PostBean postBean;
 
+    // ToDo: Fix that the url only changes when the search is being executed the second time.
+    // Perhaps create methods to manipulate the result pages directly.
     public void search() {
         if (query != null) {
+
+            if (!query.equals(previousQuery)) {
+                currentPage = 0;
+            }
+
             results = getSearchResults();
             long totalPosts = getTotalPostCount();
             Pattern queryPattern = compileSearchPattern();
@@ -41,6 +49,8 @@ public class SearchController implements Serializable {
                 wrapResult(result, queryMatcher);
             }
             createPagination(totalPosts);
+
+            previousQuery = query;
         }
     }
 
