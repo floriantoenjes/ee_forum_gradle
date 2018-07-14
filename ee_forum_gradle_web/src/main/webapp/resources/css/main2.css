@@ -18,3 +18,15 @@
     width: 10%;
     text-align: right;
 }
+
+.form-heading {
+    padding-top: 1em;
+}
+
+.board-form {
+    padding: 1em 0;
+}
+
+.form-button {
+    margin-top: 1em;
+}
