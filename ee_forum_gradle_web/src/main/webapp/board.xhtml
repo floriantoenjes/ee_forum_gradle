@@ -4,15 +4,13 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pretty="http://ocpsoft.com/prettyfaces">
     <ui:define name="content">
 
-        <div class="thread-wrapper">
-            <pretty:link mappingId="home">
-                Overview
-            </pretty:link>
-            <h4><h:outputLabel value="#{threadController.board.name}"/></h4>
-        </div>
+        <pretty:link mappingId="home">
+            Overview
+        </pretty:link>
+        <h4><h:outputLabel value="#{threadController.board.name}"/></h4>
 
         <h:dataTable styleClass="table table-bordered" value="#{threadController.threads}" var="thread"
-                     rowClasses="" headerClass="" rows="5">
+                     rows="5">
             <f:facet name="header">Threads</f:facet>
             <h:column>
                 <f:facet name="header">Thread</f:facet>
@@ -49,7 +47,6 @@
                 </pretty:link>
             </h:column>
         </h:dataTable>
-        <div class="wrapper">
             <p>Page
                 <ui:repeat value="#{threadController.pages}" var="page">
                     <pretty:link mappingId="viewBoardPages" rendered="#{page != threadController.currentPage}">
@@ -66,6 +63,5 @@
                 <f:param value="#{threadController.boardId}"/>
                 New thread
             </pretty:link>
-        </div>
     </ui:define>
 </ui:composition>

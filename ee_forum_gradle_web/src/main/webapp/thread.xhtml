@@ -5,23 +5,21 @@
                 xmlns:pretty="http://ocpsoft.com/prettyfaces">
     <ui:define name="content">
 
-        <div class="thread-wrapper">
-            <pretty:link mappingId="viewBoard">
-                <f:param value="#{postController.boardId}"/>
-                #{postController.board.name}
-            </pretty:link>
-            <h2><h:outputLabel value="#{postController.thread.name}"/></h2>
+        <pretty:link mappingId="viewBoard">
+            <f:param value="#{postController.boardId}"/>
+            #{postController.board.name}
+        </pretty:link>
+        <h2><h:outputLabel value="#{postController.thread.name}"/></h2>
 
-            <pretty:link mappingId="editThread" rendered='#{signInController.user.equals(postController.thread.author)
-            || signInController.user.hasRole("ADMIN")}'>
-                <f:param value="#{postController.boardId}"/>
-                <f:param value="#{postController.threadId}"/>
-                Edit Thread
-            </pretty:link>
-        </div>
+        <pretty:link mappingId="editThread" rendered='#{signInController.user.equals(postController.thread.author)
+        || signInController.user.hasRole("ADMIN")}'>
+            <f:param value="#{postController.boardId}"/>
+            <f:param value="#{postController.threadId}"/>
+            Edit Thread
+        </pretty:link>
 
         <h:dataTable value="#{postController.posts}" var="post" styleClass="table post-table" rowClasses="table-even-row,
-        table-odd-row" headerClass="table-header" columnClasses="avatar-column, user-column, post-column" rows="5">
+        table-odd-row" headerClass="table-header" columnClasses="avatar-column, user-column, post-column, post-count-column" rows="5">
             <h:column>
                 <h:graphicImage url="/avatar?userId=#{post.author.id}" rendered="#{post.author.avatar != null}"/>
                 <h:graphicImage library="img" name="user.png" rendered="#{post.author.avatar == null}"/>
@@ -58,7 +56,6 @@
                 ##{post.postNumber}
             </h:column>
         </h:dataTable>
-        <div class="wrapper">
             <p>Page
                 <ui:repeat value="#{postController.pages}" var="page">
                     <pretty:link mappingId="viewThreadPages" rendered="#{page != postController.currentPage}">
@@ -77,6 +74,5 @@
                 <f:param value="#{postController.threadId}"/>
                 New post
             </pretty:link>
-        </div>
     </ui:define>
 </ui:composition>

@@ -5,3 +5,16 @@
 .table {
     height: 354px;
 }
+
+.avatar-column {
+    width: 11%;
+}
+
+.user-column {
+    width: 9%;
+}
+
+.post-count-column {
+    width: 10%;
+    text-align: right;
+}
