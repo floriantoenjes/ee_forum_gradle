@@ -45,18 +45,18 @@
             </h:column>
         </h:dataTable>
             <ui:fragment rendered="#{searchController.results.size() > 0}">
-                <p>Page
-                    <ui:repeat value="#{searchController.pages}" var="page">
-                        <pretty:link mappingId="searchResultsPages" rendered="#{page != searchController.currentPage}">
-                            <f:param value="#{searchController.query}"/>
-                            <f:param value="#{page}"/>
-                            #{page + 1}
-                        </pretty:link>
-                        <ui:fragment rendered="#{page == searchController.currentPage}">
-                            #{page + 1}
-                        </ui:fragment>
-                    </ui:repeat>
-                </p>
+                <h:form>
+                    <p>Page
+                        <ui:repeat value="#{searchController.pages}" var="page">
+                            <h:commandLink action="#{searchController.searchByPage(page)}" rendered="#{page != searchController.currentPage}">
+                                #{page + 1}
+                            </h:commandLink>
+                            <ui:fragment rendered="#{page == searchController.currentPage}">
+                                #{page + 1}
+                            </ui:fragment>
+                        </ui:repeat>
+                    </p>
+                </h:form>
             </ui:fragment>
     </ui:define>
 </ui:composition>

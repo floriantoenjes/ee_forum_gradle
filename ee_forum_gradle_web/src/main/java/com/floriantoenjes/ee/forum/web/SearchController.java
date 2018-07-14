@@ -31,8 +31,6 @@ public class SearchController implements Serializable {
     @EJB
     private PostBean postBean;
 
-    // ToDo: Fix that the url only changes when the search is being executed the second time.
-    // Perhaps create methods to manipulate the result pages directly.
     public void search() {
         if (query != null) {
 
@@ -52,6 +50,11 @@ public class SearchController implements Serializable {
 
             previousQuery = query;
         }
+    }
+
+    public void searchByPage(int page) {
+        currentPage = page;
+        search();
     }
 
     private List<Post> getSearchResults() {
