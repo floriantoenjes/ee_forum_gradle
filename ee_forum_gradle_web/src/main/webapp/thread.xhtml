@@ -44,13 +44,15 @@
                     <hr/>
                     <h:outputText style="white-space: pre-wrap" value="#{post.author.signature}"/>
                 </ui:fragment>
-                <pretty:link mappingId="editPost"
-                             rendered='#{(!post.deleted and signInController.user.equals(post.author)) || signInController.user.hasRole("ADMIN")}'>
-                    <f:param value="#{postController.boardId}"/>
-                    <f:param value="#{postController.threadId}"/>
-                    <f:param value="#{post.id}"/>
-                    Edit post
-                </pretty:link>
+                <div class="text-right">
+                    <pretty:link mappingId="editPost"
+                                 rendered='#{(!post.deleted and signInController.user.equals(post.author)) || signInController.user.hasRole("ADMIN")}'>
+                        <f:param value="#{postController.boardId}"/>
+                        <f:param value="#{postController.threadId}"/>
+                        <f:param value="#{post.id}"/>
+                        Edit post
+                    </pretty:link>
+                </div>
             </h:column>
             <h:column>
                 ##{post.postNumber}
