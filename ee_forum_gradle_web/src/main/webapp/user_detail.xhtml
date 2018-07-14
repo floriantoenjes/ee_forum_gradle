@@ -3,19 +3,16 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pretty="http://ocpsoft.com/prettyfaces">
     <ui:define name="content">
-        <div class="wrapper">
+        <h:panelGrid columns="1">
             <h:graphicImage url="/avatar?userId=#{userController.user.id}"
                             rendered="#{userController.user.avatar != null}"/>
-            <br/>
             <h:outputText value="Username: #{userController.user.username}"/>
-            <br/>
             <h:outputText value="Posts: #{userController.user.postCount}"/>
-            <br/>
             <pretty:link mappingId="sendMessage"
                          rendered="#{signInController.user != null and userController.userId != signInController.user.id}">
                 <f:param value="#{userController.user.id}"/>
                 Send a message
             </pretty:link>
-        </div>
+        </h:panelGrid>
     </ui:define>
 </ui:composition>
