@@ -7,14 +7,14 @@
             <h2><h:outputLabel value="#{threadController.board.name}"/></h2>
             <h:messages/>
         </div>
-        <h:form styleClass="center-form">
+        <h:form styleClass="forum-form">
             <h:panelGrid columns="2">
                 <h:outputLabel for="name" value="Title:"/>
                 <h:inputText id="name" value="#{threadController.thread.name}"/>
                 <h:outputLabel for="firstPost" value="First post:"/>
                 <h:inputTextarea id="firstPost" value="#{threadController.post.text}" cols="80" rows="20"/>
                 <h:commandButton action="#{threadController.createThread(signInController.user)}"
-                                 value="Create Thread"/>
+                                 value="Create Thread" styleClass="btn btn-primary form-button"/>
             </h:panelGrid>
         </h:form>
     </ui:define>

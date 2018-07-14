@@ -4,20 +4,25 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:pretty="http://ocpsoft.com/prettyfaces">
     <ui:define name="content">
-        <div class="wrapper">
-            <h2><h:outputLabel value="Control Center"/></h2>
-            <h:form id="avatarForm" enctype="multipart/form-data">
-                <h:outputLabel for="avatar" value="Upload an avatar:"/>
-                <br/>
+        <h4><h:outputLabel value="Control Center"/></h4>
+
+        <h:form id="avatarForm" enctype="multipart/form-data">
+            <h:panelGrid columns="2" styleClass="table" style="width: 45%">
+                <h:outputLabel for="avatar" value="Your avatar:"/>
                 <h:graphicImage url="/avatar?userId=#{signInController.user.id}" rendered="#{signInController.user.avatar != null}"/>
-                <br/>
-                <h:inputFile id="avatar" value="#{profileController.part}"/>
-                <br/>
-                <br/>
+
+                <h:column>
+                    <h:inputFile id="avatar" value="#{profileController.part}"/>
+                </h:column>
+                <h:column/>
+
                 <h:outputLabel for="signature" value="Enter a signature:"/>
+
                 <h:inputTextarea id="signature" value="#{signInController.user.signature}"/>
-                <h:commandButton value="Save Profile" action="#{profileController.saveProfile}"/>
-            </h:form>
-        </div>
+
+                <h:commandButton value="Save Profile" action="#{profileController.saveProfile}" styleClass="btn btn-primary"/>
+            </h:panelGrid>
+        </h:form>
+
     </ui:define>
 </ui:composition>

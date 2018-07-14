@@ -3,7 +3,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="content">
-        <h:form styleClass="sign-in" id="signinForm">
+        <h:form styleClass="forum-form" id="signinForm">
             <h:panelGrid styleClass="table" columns="2">
                 <f:facet name="header">
                     <h:outputText value="Sign In"/>
@@ -12,9 +12,10 @@
                 <h:inputText id="username" value="#{signInController.username}"/>
                 <h:outputLabel for="password" value="Password:"/>
                 <h:inputSecret id="password" value="#{signInController.password}"/>
-                <h:column/>
+                <h:column>
+                    <h:commandButton action="#{signInController.signin}" value="Signin" styleClass="btn btn-primary form-button"/>
+                </h:column>
                 <h:message for="signinForm"/>
-                <h:commandButton action="#{signInController.signin}" value="Signin"/>
             </h:panelGrid>
         </h:form>
     </ui:define>

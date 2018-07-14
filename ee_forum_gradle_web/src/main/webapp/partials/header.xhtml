@@ -6,26 +6,52 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
-    <h1 id="title">Forum</h1>
-    <ul class="navbar">
-        <li><h:link value="Home" outcome="pretty:home"/></li>
-        <ui:fragment rendered="#{signInController.user == null}">
-            <li><h:link value="Sign in" outcome="pretty:signIn"/></li>
-        </ui:fragment>
-        <ui:fragment rendered="#{signInController.user == null}">
-            <li><h:link value="Register" outcome="pretty:register"/></li>
-        </ui:fragment>
-        <li>
-            <h:form rendered="#{signInController.user != null}">
-                <h:commandLink value="Sign out" action="#{signInController.logout}"/>
-            </h:form>
-        </li>
-        <li><h:link value="Search" outcome="pretty:search"/></li>
-        <li><h:link value="Users" outcome="pretty:viewUserList"/></li>
-        <li><h:link value="Messages" outcome="pretty:viewMessageList"/></li>
-        <ui:fragment rendered="#{signInController.user != null}">
-            <li><h:link value="Control Center" outcome="pretty:controlCenter"/></li>
-        </ui:fragment>
-    </ul>
+    <div class="container header">
+        <div class="nav navbar-expand-lg navbar-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="navbar-brand">Forum</div>
+                <ul class="navbar-nav">
+                    <li class="#{view.viewId eq '/index.xhtml' ? 'nav-item active' : 'nav-item'}">
+                        <h:link value="Home" outcome="pretty:home" styleClass="nav-link"/>
+                    </li>
+                    <ui:fragment rendered="#{signInController.user == null}">
+                        <li class="#{view.viewId eq '/signin.xhtml' ? 'nav-item active' : 'nav-item'}">
+                            <h:link value="Sign in" outcome="pretty:signIn" styleClass="nav-link"/>
+                        </li>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{signInController.user == null}">
+                        <li class="#{view.viewId eq '/register.xhtml' ? 'nav-item active' : 'nav-item'}">
+                            <h:link value="Register" outcome="pretty:register" styleClass="nav-link"/>
+                        </li>
+                    </ui:fragment>
+                    <li class="nav-item">
+                        <h:form rendered="#{signInController.user != null}">
+                            <h:commandLink value="Sign out" action="#{signInController.logout}" styleClass="nav-link"/>
+                        </h:form>
+                    </li>
+                    <li class="#{view.viewId eq '/search.xhtml' ? 'nav-item active' : 'nav-item'}">
+                        <h:link value="Search" outcome="pretty:search" styleClass="nav-link"/></li>
+                    <li class="#{view.viewId eq '/users.xhtml' ? 'nav-item active' : 'nav-item'}">
+                        <h:link value="Users" outcome="pretty:viewUserList" styleClass="nav-link"/>
+                    </li>
+                    <ui:fragment rendered="#{signInController.user != null}">
+                        <li class="#{view.viewId eq '/message.xhtml' ? 'nav-item active' : 'nav-item'}">
+                            <h:link value="Messages" outcome="pretty:viewMessageList"
+                                                     styleClass="nav-link"/>
+                        </li>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{signInController.user != null}">
+                        <li class="#{view.viewId eq '/control-center.xhtml' ? 'nav-item active' : 'nav-item'}">
+                            <h:link value="Control Center" outcome="pretty:controlCenter"
+                                                     styleClass="nav-link"/></li>
+                    </ui:fragment>
+                </ul>
+            </div>
+        </div>
+    </div>
 </f:view>
 </html>

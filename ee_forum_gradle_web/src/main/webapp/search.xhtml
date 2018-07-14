@@ -4,25 +4,18 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:pretty="http://ocpsoft.com/prettyfaces">
     <ui:define name="content">
-        <div class="wrapper">
-            <h2 id="subtitle">Search</h2>
-            <h:form>
-                <h:inputText id="search" value="#{searchController.query}"/>
-                <h:commandButton value="Go" action="pretty:searchResults"/>
-            </h:form>
-        </div>
-        <h:dataTable styleClass="table post-table" rowClasses="table-even-row, table-odd-row" headerClass="table-header"
-                     value="#{searchController.results}" var="result" rendered="#{searchController.results.size() > 0}"
-                     columnClasses="thread-column, found-column, user-column, created-at-column">
+        <h2 id="subtitle">Search</h2>
+        <h:form styleClass="forum-form">
+            <h:inputText id="search" value="#{searchController.query}"/>
+            <h:commandButton value="Go" action="#{searchController.search}" styleClass="btn btn-primary search-button"/>
+        </h:form>
+        <h:dataTable styleClass="table" value="#{searchController.results}" var="result" rendered="#{searchController.results.size() > 0}">
             <f:facet name="header">
                 <h:outputText value="Results"/>
             </f:facet>
             <h:column>
-                <f:facet name="header">Board</f:facet>
-                <pretty:link mappingId="viewBoard">
-                    #{result.thread.board.name}
-                    <f:param value="#{result.thread.board.id}"/>
-                </pretty:link>
+                <f:facet name="header">Result</f:facet>
+                #{result.text}
             </h:column>
             <h:column>
                 <f:facet name="header">Thread</f:facet>
@@ -34,8 +27,11 @@
                 </pretty:link>
             </h:column>
             <h:column>
-                <f:facet name="header">Found</f:facet>
-                #{result.text}
+                <f:facet name="header">Board</f:facet>
+                <pretty:link mappingId="viewBoard">
+                    #{result.thread.board.name}
+                    <f:param value="#{result.thread.board.id}"/>
+                </pretty:link>
             </h:column>
             <h:column>
                 <f:facet name="header">by User</f:facet>
@@ -48,21 +44,19 @@
                 </h:outputText>
             </h:column>
         </h:dataTable>
-        <div class="wrapper">
             <ui:fragment rendered="#{searchController.results.size() > 0}">
-                <p>Page
-                    <ui:repeat value="#{searchController.pages}" var="page">
-                        <pretty:link mappingId="searchResultsPages" rendered="#{page != searchController.currentPage}">
-                            <f:param value="#{searchController.query}"/>
-                            <f:param value="#{page}"/>
-                            #{page + 1}
-                        </pretty:link>
-                        <ui:fragment rendered="#{page == searchController.currentPage}">
-                            #{page + 1}
-                        </ui:fragment>
-                    </ui:repeat>
-                </p>
+                <h:form>
+                    <p>Page
+                        <ui:repeat value="#{searchController.pages}" var="page">
+                            <h:commandLink action="#{searchController.searchByPage(page)}" rendered="#{page != searchController.currentPage}">
+                                #{page + 1}
+                            </h:commandLink>
+                            <ui:fragment rendered="#{page == searchController.currentPage}">
+                                #{page + 1}
+                            </ui:fragment>
+                        </ui:repeat>
+                    </p>
+                </h:form>
             </ui:fragment>
-        </div>
     </ui:define>
 </ui:composition>

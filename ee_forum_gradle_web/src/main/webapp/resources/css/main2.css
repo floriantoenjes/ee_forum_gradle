@@ -1,0 +1,40 @@
+.header {
+    padding: 2em 0 1em 0;
+}
+
+.table {
+    height: 354px;
+}
+
+.avatar-column {
+    width: 11%;
+}
+
+.user-column {
+    width: 9%;
+}
+
+.post-count-column {
+    width: 10%;
+    text-align: right;
+}
+
+.form-heading {
+    padding-top: 1em;
+}
+
+.forum-form {
+    padding: 1em 0;
+}
+
+.form-button {
+    margin-top: 1em;
+}
+
+.search-button {
+    margin: 0 0.5em;
+}
+
+.subject-column {
+    width: 70%;
+}

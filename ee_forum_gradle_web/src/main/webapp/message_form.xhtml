@@ -3,12 +3,15 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pretty="http://ocpsoft.com/prettyfaces">
     <ui:define name="content">
-        <h:form>
-            <h:outputLabel value="Subject:" for="message-subject"/>
-            <h:inputText id="message-subject" value="#{userController.message.subject}"/>
-            <h:outputLabel value="Message:" for="message-text"/>
-            <h:inputTextarea id="message-text" value="#{userController.message.text}"/>
-            <h:commandButton action="#{userController.sendMessage}" value="Send"/>
+        <h4>Send a message</h4>
+        <h:form styleClass="forum-form">
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Subject:" for="message-subject"/>
+                <h:inputText id="message-subject" value="#{userController.message.subject}" style="width: 100%"/>
+                <h:outputLabel value="Message:" for="message-text"/>
+                <h:inputTextarea id="message-text" value="#{userController.message.text}" cols="80" rows="10"/>
+                <h:commandButton action="#{userController.sendMessage}" value="Send" styleClass="btn btn-primary"/>
+            </h:panelGrid>
         </h:form>
     </ui:define>
 </ui:composition>

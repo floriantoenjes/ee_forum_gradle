@@ -3,17 +3,16 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="content">
-        <div class="wrapper">
-            <h:messages/>
-        </div>
-        <h:form styleClass="center-form">
+        <h:messages/>
+        <h4 class="form-heading">Create a new Board</h4>
+        <h:form styleClass="forum-form">
             <h:panelGrid columns="2">
-                <h:outputLabel for="name" value="Name:"/>
+                <h:outputLabel for="name" value="Board name:"/>
                 <h:inputText id="name" value="#{boardController.board.name}"/>
                 <h:outputLabel for="description" value="Description:"/>
                 <h:inputTextarea id="description" value="#{boardController.board.description}" cols="40" rows="5"/>
                 <h:commandButton action="#{boardController.createBoard}"
-                                 value="Create Board"/>
+                                 value="Create Board" styleClass="btn btn-primary form-button"/>
             </h:panelGrid>
         </h:form>
     </ui:define>
