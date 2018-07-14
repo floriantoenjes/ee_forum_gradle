@@ -34,3 +34,7 @@
 .search-button {
     margin: 0 0.5em;
 }
+
+.subject-column {
+    width: 70%;
+}
