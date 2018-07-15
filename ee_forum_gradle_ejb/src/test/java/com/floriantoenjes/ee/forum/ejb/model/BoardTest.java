@@ -21,7 +21,7 @@ public class BoardTest {
 
         board.addThread(thread);
 
-        assertEquals(board.getThreadCount().longValue(), 1L);
+        assertEquals(board.getThreadCount().longValue(), 1);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class BoardTest {
 
         board.removeThread(thread);
 
-        assertEquals(board.getThreadCount().longValue(), 0L);
+        assertEquals(board.getThreadCount().longValue(), 0);
     }
 
     @Test
