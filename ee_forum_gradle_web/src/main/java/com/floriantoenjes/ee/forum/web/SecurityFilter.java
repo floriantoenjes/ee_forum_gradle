@@ -19,7 +19,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-// ToDo: Perhaps declare filter priority in web.xml
 @WebFilter(urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
 public class SecurityFilter implements Filter {
 
@@ -74,14 +73,10 @@ public class SecurityFilter implements Filter {
         path = httpServletRequest.getRequestURI().substring(httpServletRequest.getContextPath().length());
         user = signInController.getUser();
 
-        if (isUserAdmin()) {
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
+        if (!isUserAdmin()) {
+            restrictViews(servletRequest, servletResponse);
+            filterAuthEntities();
         }
-
-        restrictViews(servletRequest, servletResponse);
-
-        filterAuthEntities();
 
         filterChain.doFilter(servletRequest, servletResponse);
     }
