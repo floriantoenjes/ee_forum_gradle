@@ -5,7 +5,7 @@
     http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     <lifecycle>
         <phase-listener>
-            com.floriantoenjes.ee.forum.web.MultiPageMessagesSupport
+            com.floriantoenjes.ee.forum.web.util.MultiPageMessagesSupport
         </phase-listener>
     </lifecycle>
 </faces-config>

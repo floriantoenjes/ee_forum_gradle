@@ -1,4 +1,4 @@
-package com.floriantoenjes.ee.forum.web;
+package com.floriantoenjes.ee.forum.web.validators;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;

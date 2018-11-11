@@ -1,4 +1,4 @@
-package com.floriantoenjes.ee.forum.web;
+package com.floriantoenjes.ee.forum.web.filters;
 
 import com.floriantoenjes.ee.forum.ejb.EntityBean;
 import com.floriantoenjes.ee.forum.ejb.MessageBean;
@@ -6,6 +6,7 @@ import com.floriantoenjes.ee.forum.ejb.PostBean;
 import com.floriantoenjes.ee.forum.ejb.ThreadBean;
 import com.floriantoenjes.ee.forum.ejb.model.AuthEntity;
 import com.floriantoenjes.ee.forum.ejb.model.User;
+import com.floriantoenjes.ee.forum.web.SignInController;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;

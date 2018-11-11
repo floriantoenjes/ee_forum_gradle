@@ -1,4 +1,4 @@
-package com.floriantoenjes.ee.forum.web;
+package com.floriantoenjes.ee.forum.web.servlets;
 
 import com.floriantoenjes.ee.forum.ejb.UserBean;
 

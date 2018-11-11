@@ -1,4 +1,4 @@
-package com.floriantoenjes.ee.forum.web;
+package com.floriantoenjes.ee.forum.web.util;
 
 import java.util.ArrayList;
 import java.util.Iterator;
